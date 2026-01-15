@@ -1,0 +1,527 @@
+<style>
+/* ================= BRAND PALETTE ================= */
+:root {
+  --op-blue: #005CFF;
+  --op-pink: #FF2E98;
+  --op-purple: #5D00FF;
+  --op-black: #111111;
+  --op-light: #F5F5F7;
+}
+
+/* ================= LABEL ================= */
+.label-title {
+  display: block;
+  margin: 24px 0 10px;
+  font-weight: 700;
+}
+
+/* ================= SELECT ================= */
+.select-wrapper {
+  position: relative;
+}
+
+#categorySelect {
+  width: 100%;
+  padding: 14px 48px 14px 16px;
+  border-radius: 14px;
+  border: 2px solid var(--op-black);
+  background: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  appearance: none;
+}
+
+.select-wrapper::after {
+  content: "▼";
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* ================= GRID ================= */
+.product-card-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 26px;
+  margin-top: 20px;
+}
+
+/* ================= CARD ================= */
+.product-card {
+  background: #fff;
+  border: 2px solid #e3e3e3;
+  border-radius: 18px;
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .25s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--op-blue);
+  box-shadow: 0 6px 20px rgba(0,92,255,.15);
+}
+
+.product-card.selected {
+  border-color: var(--op-blue);
+  box-shadow: 0 6px 20px rgba(0,92,255,.25);
+}
+
+.product-card img {
+  width: 100%;
+  height: 155px;
+  object-fit: contain;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.product-card-name {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+/* ---- COLOR SELECTOR ---- */
+.color-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 12px;
+  padding: 6px 0;
+  justify-content: flex-start;
+}
+
+.color-swatch {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #e3e3e3;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+.color-swatch:hover {
+  transform: scale(1.12);
+  box-shadow: 0 0 12px rgba(0, 51, 255, .35);
+}
+
+.color-swatch.selected {
+  border-color: #EF007F;
+  box-shadow: 0 0 14px rgba(239, 0, 127, .45);
+  transform: scale(1.18);
+}
+
+@media (max-width: 480px) {
+  .color-swatch {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width:1024px){
+  .product-card-container { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width:600px){
+  .product-card-container { grid-template-columns: 1fr; }
+}
+</style>
+
+<!-- ================= CATEGORY ================= -->
+<label class="label-title">Category</label>
+<div class="select-wrapper">
+  <select id="categorySelect">
+    <option value="">Select a category...</option>
+    <option value="shorts">Shorts</option>
+    <option value="pants">Pants</option>
+    <option value="jackets">Jackets</option>
+    <option value="accessories">Accessories</option>
+  </select>
+</div>
+
+<!-- ================= PRODUCTS ================= -->
+<div id="productCardContainer" class="product-card-container"></div>
+
+<!-- ================= DESIGNS ================= -->
+<div id="designSection" style="display:none;">
+  <label class="label-title">Choose your design</label>
+  <div id="designCardContainer" class="product-card-container"></div>
+</div>
+
+<!-- ================= COLORS ================= -->
+<div id="colorSection" style="display:none;">
+  <label class="label-title"><strong>Color</strong></label>
+  <div id="colorSelector" class="color-selector"></div>
+</div>
+
+<!-- ================= DESPIECE ================= -->
+<div id="breakdownSection" style="display:none;">
+  <label class="label-title"><strong>Garment breakdown</strong></label>
+  <img id="breakdownImage" src="" style="width:100%; border-radius:14px; margin-top:12px;">
+</div>
+
+<!-- ================= LOGO POSITIONS ================= -->
+<div id="logoSection" style="display:none;">
+  <label class="label-title"><strong>Logo / Text placement</strong></label>
+  <div id="logoSelectors"></div>
+</div>
+
+<!-- ================= HIDDEN ================= -->
+<input type="hidden" id="selectedProduct" name="selectedProduct">
+<input type="hidden" id="selectedDesign" name="selectedDesign">
+<input type="hidden" id="selectedColor" name="selectedColor">
+<input type="hidden" id="selectedPlacements" name="selectedPlacements">
+
+<script>
+/* =========================================================
+   PRODUCTOS AGRUPADOS POR CATEGORÍA
+   ========================================================= */
+const productsByCategory = {
+  shorts: [
+    {
+      id: "XTS",
+      name: "Female cross training short none internal brief",
+      image:
+        "https://opuestoaqua.com/wp-content/uploads/2025/12/FEMALE_CROSS_TRAINING_SHORT_NONE_INTERNAL_BRIEF.webp",
+    },
+  ],
+  pants: [
+    {
+      id: "JGR",
+      name: "Jogger unisex",
+      image:
+        "https://opuestoaqua.com/wp-content/uploads/2025/12/JOGGER_UNISEX.webp",
+    },
+    {
+      id: "WUP",
+      name: "Warmup pant unisex",
+      image:
+        "https://opuestoaqua.com/wp-content/uploads/2025/12/WARMUP_PANT_UNISEX.webp",
+    },
+  ],
+  jackets: [
+    {
+      id: "WBJ",
+      name: "Windbreaker jacket unisex",
+      image:
+        "https://opuestoaqua.com/wp-content/uploads/2026/01/2-WBJ-SUB01-2-FRONT.png",
+    },
+    {
+      id: "CWB",
+      name: "Female crop windbreaker",
+      image:
+        "https://opuestoaqua.com/wp-content/uploads/2025/12/FEMALE_CROP_WINDBREAKER.webp",
+    },
+    {
+      id: "BJT",
+      name: "Bomber jacket",
+      image:
+        "https://opuestoaqua.com/wp-content/uploads/2026/01/1-BJT-SUB-FRONT.png",
+    },
+  ],
+  accessories: [
+    {
+      id: "SLD",
+      name: "Slides",
+      image: "https://opuestoaqua.com/wp-content/uploads/2025/12/SLIDES.webp",
+    },
+    {
+      id: "THS",
+      name: "Team hair scrunchie",
+      image:
+        "https://opuestoaqua.com/wp-content/uploads/2025/12/TEAM_HAIR_SCRUNCHIE.webp",
+    },
+    {
+      id: "BCK",
+      name: "Backpak",
+      image: "https://opuestoaqua.com/wp-content/uploads/2025/12/BACKPAK.webp",
+    },
+  ],
+};
+
+/* =========================================================
+   DISEÑOS POR PRODUCTO
+   ========================================================= */
+const designsByProduct = {
+  wbj: [
+    { id: "design_1", name: "design_1", image: "https://opuestoaqua.com/wp-content/uploads/2026/01/2-WBJ-SUB01-2-FRONT.png" },
+     { id: "design_2", name: "design_2", image: "https://opuestoaqua.com/wp-content/uploads/2026/01/2-WBJ-SUB01-FRONT.png" },
+ { id: "design_3", name: "design_3", image: "https://opuestoaqua.com/wp-content/uploads/2026/01/7-WBJ-SUB01-M-FRONT.png" },
+ { id: "design_4", name: "design_4", image: "https://opuestoaqua.com/wp-content/uploads/2026/01/10-WBJ-SUB01-FRONT.png" }
+  ],
+  bjt: [
+    { id: "design_1", name: "design_1", image: "https://opuestoaqua.com/wp-content/uploads/2026/01/1-BJT-SUB-2-FRONT.png" },
+{ id: "design_2", name: "design_2", image: "https://opuestoaqua.com/wp-content/uploads/2026/01/1-BJT-SUB-FRONT.png" },
+{ id: "design_3", name: "design_3", image: "https://opuestoaqua.com/wp-content/uploads/2026/01/3-BJT-SUB-FRONT.png" },
+{ id: "design_4", name: "design_4", image: "https://opuestoaqua.com/wp-content/uploads/2026/01/6-BJT-SUB-FRONT.png" },
+{ id: "design_5", name: "design_5", image: "https://opuestoaqua.com/wp-content/uploads/2026/01/9-BJT-SUB-FRONT.png" },
+{ id: "design_6", name: "design_6", image: "https://opuestoaqua.com/wp-content/uploads/2026/01/15-BJT-SUB-FRONT.png" },
+  ]
+};
+
+/* =========================================================
+   COLORES - PALETA OPUESTO
+   ========================================================= */
+const brandColors = [
+  { name: "Jet Black", hex: "#000000" },
+  { name: "Slate", hex: "#5B5555" },
+  { name: "Clay", hex: "#94867B" },
+  { name: "Pebble", hex: "#B8AFA8" },
+  { name: "Navy", hex: "#01305C" },
+  { name: "Plum", hex: "#4A0063" },
+  { name: "Orchid", hex: "#7D0076" },
+  { name: "Soft Violet", hex: "#CFA8F9" },
+  { name: "Power Pink", hex: "#EF007F" },
+  { name: "Bubblegum", hex: "#E7695E" },
+  { name: "Coral", hex: "#F9847A" },
+  { name: "Berry", hex: "#8D0022" },
+  { name: "Crimson", hex: "#DC0000" },
+  { name: "Tangerine", hex: "#FF6B21" },
+  { name: "Walnut", hex: "#6B3D01" },
+  { name: "Sienna", hex: "#AE5C2C" },
+  { name: "Cobalt", hex: "#200F99" },
+  { name: "Azure", hex: "#0089CF" },
+  { name: "Sky", hex: "#A9BED6" },
+  { name: "Peacock", hex: "#1F6481" },
+  { name: "Teal", hex: "#358C95" },
+  { name: "Seafoam", hex: "#7DDCC8" },
+  { name: "Blush", hex: "#CA9281" },
+  { name: "Pastel Pink", hex: "#FFE0E8" },
+  { name: "Forest", hex: "#005130" },
+  { name: "Olive", hex: "#6A6339" },
+  { name: "Sandstone", hex: "#C7AE6B" },
+  { name: "Lemonade", hex: "#FEED01" },
+  { name: "Canary", hex: "#FFF387" },
+  { name: "Volt", hex: "#51F210" },
+  { name: "Ivory", hex: "#FFFFF0" },
+  { name: "Bright White", hex: "#FFFFFF" }
+];
+
+/* =========================================================
+   DESPIECE POR PRENDA
+   ========================================================= */
+const breakdownByProduct = {
+  wbj: {
+    image: "https://opuestoaqua.com/wp-content/uploads/2026/01/WhatsApp-Image-2026-01-08-at-21.01.32.jpeg",
+    placements: [
+      "Front chest",
+      "Upper back",
+      "Sleeve left",
+      "Sleeve right",
+      "Lower back"
+    ]
+  },
+  bjt: {
+    image: "https://opuestoaqua.com/wp-content/uploads/2026/01/BJT_BREAKDOWN.png",
+    placements: [
+      "Front chest",
+      "Upper back",
+      "Bottom hem"
+    ]
+  }
+};
+
+let currentProductId = null;
+
+/* =========================================================
+   UTILIDAD CLAVE PARA ELEMENTOR
+   ========================================================= */
+function setElementorField(fieldName, value) {
+  const el =
+    document.querySelector(`input[name="form_fields[${fieldName}]"]`) ||
+    document.getElementById(fieldName);
+
+  if (el) el.value = value;
+}
+
+/* =========================================================
+   CAMBIO DE CATEGORÍA
+   ========================================================= */
+categorySelect.addEventListener("change", e => {
+  productCardContainer.innerHTML = "";
+  designSection.style.display = "none";
+
+  setElementorField("selectedProduct", "");
+  setElementorField("selectedDesign", "");
+
+  const products = productsByCategory[e.target.value] || [];
+
+  products.forEach(product => {
+    const card = createCard(product, el => selectProduct(product, el));
+    productCardContainer.appendChild(card);
+  });
+});
+
+/* =========================================================
+   SELECCIÓN DE PRODUCTO
+   ========================================================= */
+function selectProduct(product, el) {
+  selectSingle(".product-card", productCardContainer, el);
+  setElementorField("selectedProduct", product.name);
+
+  currentProductId = product.id;
+  renderDesigns(product.id);
+
+  breakdownSection.style.display = "none";
+  logoSection.style.display = "none";
+}
+
+/* =========================================================
+   RENDER DE DISEÑOS
+   ========================================================= */
+function renderDesigns(productId) {
+  designCardContainer.innerHTML = "";
+  designSection.style.display = "block";
+  colorSection.style.display = "none";
+  setElementorField("selectedColor", "");
+
+  const designs = designsByProduct[productId.toLowerCase()] || [];
+
+  designs.forEach(design => {
+    const card = createCard(design, el => {
+      selectSingle(".product-card", designCardContainer, el);
+      setElementorField("selectedDesign", design.name);
+      colorSection.style.display = "none";
+      setElementorField("selectedColor", "");
+      renderBreakdownAndPlacements(currentProductId);
+    });
+    designCardContainer.appendChild(card);
+  });
+
+  const solidCard = createCard(
+  { 
+    name: "Solid color",
+    image: "https://images.icon-icons.com/1238/PNG/512/blacksquare_83753.png"
+  },
+  el => {
+    selectSingle(".product-card", designCardContainer, el);
+    setElementorField("selectedDesign", "Solid color");
+
+    colorSection.style.display = "block";
+    renderColors();
+
+    breakdownSection.style.display = "none";
+    logoSection.style.display = "none";
+  }
+);
+
+  designCardContainer.appendChild(solidCard);
+}
+
+/* =========================================================
+   RENDER DE COLORES
+   ========================================================= */
+
+const colorSection = document.getElementById("colorSection");
+const colorSelector = document.getElementById("colorSelector");
+const hiddenColor = document.getElementById("selectedColor");
+
+function renderColors() {
+  colorSelector.innerHTML = "";
+  setElementorField("selectedColor", "");
+
+  brandColors.forEach(color => {
+    const swatch = document.createElement("div");
+    swatch.className = "color-swatch";
+    swatch.style.backgroundColor = color.hex;
+
+    swatch.addEventListener("click", () => {
+      colorSelector
+        .querySelectorAll(".color-swatch")
+        .forEach(c => c.classList.remove("selected"));
+
+      swatch.classList.add("selected");
+
+      setElementorField(
+        "selectedColor",
+        `${color.name} (${color.hex})`
+      );
+
+      renderBreakdownAndPlacements(currentProductId);
+    });
+
+    colorSelector.appendChild(swatch);
+  });
+}
+
+/* =========================================================
+   RENDER DESPIECE
+   ========================================================= */
+function renderBreakdownAndPlacements(productId) {
+  const config = breakdownByProduct[productId.toLowerCase()];
+
+  if (!config) return;
+
+  // Mostrar secciones
+  breakdownSection.style.display = "block";
+  logoSection.style.display = "block";
+
+  // Imagen
+  breakdownImage.src = config.image;
+
+  // Limpiar selects
+  logoSelectors.innerHTML = "";
+  setElementorField("selectedPlacements", "");
+
+  const selected = [];
+
+  config.placements.forEach(place => {
+    const wrapper = document.createElement("div");
+    wrapper.style.marginBottom = "10px";
+
+    const select = document.createElement("select");
+    select.innerHTML = `
+      <option value="">No logo here</option>
+      <option value="Logo">Logo</option>
+      <option value="Text">Text</option>
+      <option value="Logo + Text">Logo + Text</option>
+    `;
+
+    select.addEventListener("change", () => {
+      const value = select.value;
+
+      const index = selected.findIndex(p => p.place === place);
+
+      if (value) {
+        if (index === -1) {
+          selected.push({ place, value });
+        } else {
+          selected[index].value = value;
+        }
+      } else if (index !== -1) {
+        selected.splice(index, 1);
+      }
+
+      setElementorField(
+        "selectedPlacements",
+        selected.map(p => `${p.place}: ${p.value}`).join(" | ")
+      );
+    });
+
+    wrapper.innerHTML = `<strong>${place}</strong>`;
+    wrapper.appendChild(select);
+    logoSelectors.appendChild(wrapper);
+  });
+}
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+function createCard(data, onClick) {
+  const card = document.createElement("div");
+  card.className = "product-card";
+  card.innerHTML = `
+    <img src="${data.image}">
+    <div class="product-card-name">${data.name}</div>
+  `;
+  card.addEventListener("click", () => onClick(card));
+  return card;
+}
+
+function selectSingle(selector, container, selectedEl) {
+  container.querySelectorAll(selector).forEach(c => c.classList.remove("selected"));
+  selectedEl.classList.add("selected");
+}
+</script>

@@ -1,0 +1,780 @@
+<style>
+/* ================= BRAND PALETTE ================= */
+:root {
+  --op-blue: #005CFF;
+  --op-pink: #FF2E98;
+  --op-purple: #5D00FF;
+  --op-black: #111111;
+  --op-light: #F5F5F7;
+}
+
+/* ================= LABEL ================= */
+.label-title {
+  display: block;
+  margin: 24px 0 10px;
+  font-weight: 700;
+}
+
+/* ================= SELECT ================= */
+.select-wrapper {
+  position: relative;
+}
+
+#categorySelect {
+  width: 100%;
+  padding: 14px 48px 14px 16px;
+  border-radius: 14px;
+  border: 2px solid var(--op-black);
+  background: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  appearance: none;
+}
+
+.select-wrapper::after {
+  content: "▼";
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* ================= GRID ================= */
+.product-card-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 26px;
+  margin-top: 20px;
+}
+
+/* ================= CARD ================= */
+.product-card {
+  background: #fff;
+  border: 2px solid #e3e3e3;
+  border-radius: 18px;
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .25s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--op-blue);
+  box-shadow: 0 6px 20px rgba(0,92,255,.15);
+}
+
+.product-card.selected {
+  border-color: var(--op-blue);
+  box-shadow: 0 6px 20px rgba(0,92,255,.25);
+}
+
+.product-card img {
+  width: 100%;
+  height: 155px;
+  object-fit: contain;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.product-card-name {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+/* ---- COLOR SELECTOR ---- */
+.color-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 12px;
+  padding: 6px 0;
+  justify-content: flex-start;
+}
+
+.color-swatch {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #e3e3e3;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+.color-swatch:hover {
+  transform: scale(1.12);
+  box-shadow: 0 0 12px rgba(0, 51, 255, .35);
+}
+
+.color-swatch.selected {
+  border-color: #EF007F;
+  box-shadow: 0 0 14px rgba(239, 0, 127, .45);
+  transform: scale(1.18);
+}
+
+@media (max-width: 480px) {
+  .color-swatch {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width:1024px){
+  .product-card-container { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width:600px){
+  .product-card-container { grid-template-columns: 1fr; }
+}
+</style>
+
+<!-- ================= CATEGORY ================= -->
+<label class="label-title">Category</label>
+<div class="select-wrapper">
+  <select id="categorySelect">
+    <option value="">Select a category...</option>
+    <option value="shorts">Shorts</option>
+    <option value="pants">Pants</option>
+    <option value="jackets">Jackets</option>
+    <option value="accessories">Accessories</option>
+  </select>
+</div>
+
+<!-- ================= PRODUCTS ================= -->
+<div id="productCardContainer" class="product-card-container"></div>
+
+<!-- ================= DESIGNS ================= -->
+<div id="designSection" style="display:none;">
+  <label class="label-title">Choose your design</label>
+  <div id="designCardContainer" class="product-card-container"></div>
+</div>
+
+<!-- ================= COLORS ================= -->
+<div id="colorSection" style="display:none;">
+  <label class="label-title"><strong>Color</strong></label>
+  <div id="colorSelector" class="color-selector"></div>
+</div>
+
+<!-- ================= DESPIECE ================= -->
+<div id="breakdownSection" style="display:none;">
+  <label class="label-title"><strong>Garment breakdown</strong></label>
+  <img id="breakdownImage" src="" style="width:100%; border-radius:14px; margin-top:12px;">
+</div>
+
+<!-- ================= LOGO POSITIONS ================= -->
+<div id="logoSection" style="display:none;">
+  <label class="label-title"><strong>Logo / Text placement</strong></label>
+  <div id="logoSelectors"></div>
+</div>
+
+<!-- ================= HIDDEN ================= -->
+<input type="hidden" id="selectedProduct" name="selectedProduct">
+<input type="hidden" id="selectedDesign" name="selectedDesign">
+<input type="hidden" id="selectedColor" name="selectedColor">
+<input type="hidden" id="selectedPlacements" name="selectedPlacements">
+
+<script>
+/* =========================================================
+   CATÁLOGO DE PRODUCTOS
+   ========================================================= */
+const catalog = {
+  categories: {
+    shorts: [
+      {
+        id: "XTS",
+        name: "Female cross training short none internal brief",
+        image:
+          "https://opuestoaqua.com/wp-content/uploads/2026/01/4-XTS-SUB01-FRONT.png",
+        designs: [
+          {
+            id: "design_1",
+            name: "design_1",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/4-XTS-SUB01-FRONT.png",
+          },
+          {
+            id: "design_2",
+            name: "design_2",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/5-XTS-SUB01-FRONT.png",
+          },
+          {
+            id: "design_3",
+            name: "design_3",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/8-XTS-SUB01-FRONT.png",
+          },
+          {
+            id: "design_4",
+            name: "design_4",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/16-XTS-SUB01-FRONT.png",
+          },
+          {
+            id: "design_5",
+            name: "design_5",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/24-XTS-SUB01-FRONT.png",
+          },
+        ],
+        breakdown: {
+          image:
+            "https://opuestoaqua.com/wp-content/uploads/2026/01/XTS-PLACEMENTS-scaled.jpg",
+          placements: [
+            "Outside front waistband",
+            "Outside back waistband",
+            "Right front panel",
+            "Left front panel",
+          ],
+        },
+      },
+    ],
+    pants: [
+      {
+        id: "JGR",
+        name: "Jogger unisex",
+        image:
+          "https://opuestoaqua.com/wp-content/uploads/2026/01/1-JGR-SUB01-2-FRONT.png",
+        designs: [
+          {
+            id: "design_1",
+            name: "design_1",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-JGR-SUB01-2-FRONT.png",
+          },
+          {
+            id: "design_2",
+            name: "design_2",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-JGR-SUB01-FRONT.png",
+          },
+          {
+            id: "design_3",
+            name: "design_3",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/3-JGR-SUB01-FRONT.png",
+          },
+          {
+            id: "design_4",
+            name: "design_4",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/6-JGR-SUB01-FRONT.png",
+          },
+          {
+            id: "design_5",
+            name: "design_5",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/9-JGR-SUB01-FRONT.png",
+          },
+          {
+            id: "design_6",
+            name: "design_6",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/15-JGR-SUB01-FRONT.png",
+          },
+        ],
+        breakdown: null,
+      },
+      {
+        id: "WUP",
+        name: "Warmup pant unisex",
+        image:
+          "https://opuestoaqua.com/wp-content/uploads/2026/01/7-WUP-SUB-FRONT.png",
+        designs: [
+          {
+            id: "design_1",
+            name: "design_1",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/2-WUP-SUB-FRONT.png",
+          },
+          {
+            id: "design_2",
+            name: "design_2",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/7-WUP-SUB-FRONT.png",
+          },
+          {
+            id: "design_3",
+            name: "design_3",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/10-WUP-SUB-FRONT.png",
+          },
+        ],
+        breakdown: null,
+      },
+    ],
+    jackets: [
+      {
+        id: "WBJ",
+        name: "Windbreaker jacket unisex",
+        image:
+          "https://opuestoaqua.com/wp-content/uploads/2026/01/2-WBJ-SUB01-2-FRONT.png",
+
+        designs: [
+          {
+            id: "design_1",
+            name: "Design 1",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/2-WBJ-SUB01-2-FRONT.png",
+          },
+          {
+            id: "design_2",
+            name: "Design 2",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/2-WBJ-SUB01-FRONT.png",
+          },
+          {
+            id: "design_3",
+            name: "Design 3",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/7-WBJ-SUB01-M-FRONT.png",
+          },
+          {
+            id: "design_4",
+            name: "Design 4",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/10-WBJ-SUB01-FRONT.png",
+          },
+        ],
+        breakdown: null,
+      },
+      {
+        id: "CWB",
+        name: "Female crop windbreaker",
+        image:
+          "https://opuestoaqua.com/wp-content/uploads/2026/01/4-CWB-SUB-FRONT-NEW.png",
+        designs: [
+          {
+            id: "design_1",
+            name: "design_1",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/4-CWB-SUB-FRONT-NEW.png",
+          },
+          {
+            id: "design_2",
+            name: "design_2",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/5-CWB-SUB-FRONT-NEW.png",
+          },
+          {
+            id: "design_3",
+            name: "design_3",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/16-CWB-SUB-FRONT-NEW.png",
+          },
+        ],
+        breakdown: {
+          image:
+            "https://opuestoaqua.com/wp-content/uploads/2026/01/CWB-PLACEMENTS-scaled.jpg",
+          placements: [
+            "Front chest",
+            "Upper back",
+            "Sleeve left",
+            "Sleeve right",
+            "Lower back",
+          ],
+        },
+      },
+      {
+        id: "BJT",
+        name: "Bomber jacket",
+        image:
+          "https://opuestoaqua.com/wp-content/uploads/2026/01/15-BJT-SUB-FRONT-NEW.png",
+        designs: [
+          {
+            id: "design_1",
+            name: "Design 1",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-BJT-SUB-2-FRONT-NEW.png",
+          },
+          {
+            id: "design_2",
+            name: "Design 2",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-BJT-SUB-FRONT-NEW.png",
+          },
+          {
+            id: "design_3",
+            name: "Design 3",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/3-BJT-SUB-FRONT-NEW.png",
+          },
+          {
+            id: "design_4",
+            name: "Design 4",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/6-BJT-SUB-FRONT-NEW.png",
+          },
+          {
+            id: "design_5",
+            name: "Design 5",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/9-BJT-SUB-FRONT-NEW.png",
+          },
+          {
+            id: "design_6",
+            name: "Design 6",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/15-BJT-SUB-FRONT-NEW.png",
+          },
+        ],
+        breakdown: null,
+      },
+    ],
+    accessories: [
+      {
+        id: "SLD",
+        name: "Slides",
+        image:
+          "https://opuestoaqua.com/wp-content/uploads/2026/01/1-SLD-SUB01.png",
+        designs: [
+          {
+            id: "design_1",
+            name: "design_1",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-SLD-SUB01.png",
+          },
+          {
+            id: "design_2",
+            name: "design_2",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-SLD-SUB01-2-NEW.png",
+          },
+          {
+            id: "design_3",
+            name: "design_3",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/4-SLD-SUB01.png",
+          },
+          {
+            id: "design_4",
+            name: "design_4",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/24-SLD-SUB01.png",
+          },
+        ],
+        breakdown: null,
+      },
+      {
+        id: "THS",
+        name: "Team hair scrunchie",
+        image:
+          "https://opuestoaqua.com/wp-content/uploads/2026/01/2-THS-SUB01.png",
+        designs: [
+          {
+            id: "design_1",
+            name: "design_1",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/2-THS-SUB01.png",
+          },
+          {
+            id: "design_2",
+            name: "design_2",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/3-THS-SUB01.png",
+          },
+          {
+            id: "design_3",
+            name: "design_3",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/21-THS-SUB01.png",
+          },
+        ],
+        breakdown: null,
+      },
+      {
+        id: "BCK",
+        name: "Backpak",
+        image:
+          "https://opuestoaqua.com/wp-content/uploads/2026/01/8-MOCKUP-BCK-SUB01.png",
+        designs: [
+          {
+            id: "design_1",
+            name: "design_1",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/8-MOCKUP-BCK-SUB01.png",
+          },
+          {
+            id: "design_2",
+            name: "design_2",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/16-MOCKUP-BCK-SUB01.png",
+          },
+          {
+            id: "design_3",
+            name: "design_3",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/23-MOCKUP-BCK-SUB01-B.png",
+          },
+          {
+            id: "design_4",
+            name: "design_4",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/8-MOCKUP-BCK-SUB01-B.png",
+          },
+        ],
+        breakdown: null,
+      },
+    ],
+  },
+};
+
+/* =========================================================
+   COLORES - PALETA OPUESTO
+   ========================================================= */
+const brandColors = [
+  { name: "Jet Black", hex: "#000000" },
+  { name: "Slate", hex: "#5B5555" },
+  { name: "Clay", hex: "#94867B" },
+  { name: "Pebble", hex: "#B8AFA8" },
+  { name: "Navy", hex: "#01305C" },
+  { name: "Plum", hex: "#4A0063" },
+  { name: "Orchid", hex: "#7D0076" },
+  { name: "Soft Violet", hex: "#CFA8F9" },
+  { name: "Power Pink", hex: "#EF007F" },
+  { name: "Bubblegum", hex: "#E7695E" },
+  { name: "Coral", hex: "#F9847A" },
+  { name: "Berry", hex: "#8D0022" },
+  { name: "Crimson", hex: "#DC0000" },
+  { name: "Tangerine", hex: "#FF6B21" },
+  { name: "Walnut", hex: "#6B3D01" },
+  { name: "Sienna", hex: "#AE5C2C" },
+  { name: "Cobalt", hex: "#200F99" },
+  { name: "Azure", hex: "#0089CF" },
+  { name: "Sky", hex: "#A9BED6" },
+  { name: "Peacock", hex: "#1F6481" },
+  { name: "Teal", hex: "#358C95" },
+  { name: "Seafoam", hex: "#7DDCC8" },
+  { name: "Blush", hex: "#CA9281" },
+  { name: "Pastel Pink", hex: "#FFE0E8" },
+  { name: "Forest", hex: "#005130" },
+  { name: "Olive", hex: "#6A6339" },
+  { name: "Sandstone", hex: "#C7AE6B" },
+  { name: "Lemonade", hex: "#FEED01" },
+  { name: "Canary", hex: "#FFF387" },
+  { name: "Volt", hex: "#51F210" },
+  { name: "Ivory", hex: "#FFFFF0" },
+  { name: "Bright White", hex: "#FFFFFF" }
+];
+
+/* =========================================================
+   ELEMENTOS DOM
+   ========================================================= */
+const categorySelect = document.getElementById("categorySelect");
+const productCardContainer = document.getElementById("productCardContainer");
+
+const designSection = document.getElementById("designSection");
+const designCardContainer = document.getElementById("designCardContainer");
+
+const colorSection = document.getElementById("colorSection");
+const colorSelector = document.getElementById("colorSelector");
+
+const breakdownSection = document.getElementById("breakdownSection");
+const breakdownImage = document.getElementById("breakdownImage");
+
+const logoSection = document.getElementById("logoSection");
+const logoSelectors = document.getElementById("logoSelectors");
+
+/* =========================================================
+   ESTADO
+   ========================================================= */
+let currentProduct = null;
+
+/* =========================================================
+   ELEMENTOR
+   ========================================================= */
+function setElementorField(fieldName, value) {
+  const el =
+    document.querySelector(`input[name="form_fields[${fieldName}]"]`) ||
+    document.getElementById(fieldName);
+
+  if (el) el.value = value;
+}
+
+/* =========================================================
+   RESET
+   ========================================================= */
+function resetAfterProductChange() {
+  designSection.style.display = "none";
+  colorSection.style.display = "none";
+  breakdownSection.style.display = "none";
+  logoSection.style.display = "none";
+
+  setElementorField("selectedDesign", "");
+  setElementorField("selectedColor", "");
+  setElementorField("selectedPlacements", "");
+}
+
+/* =========================================================
+   CATEGORY CHANGE
+   ========================================================= */
+categorySelect.addEventListener("change", e => {
+  productCardContainer.innerHTML = "";
+  resetAfterProductChange();
+  currentProduct = null;
+
+  setElementorField("selectedProduct", "");
+
+  const products = catalog.categories[e.target.value] || [];
+
+  products.forEach(product => {
+    productCardContainer.appendChild(
+      createCard(product, el => selectProduct(product, el))
+    );
+  });
+});
+
+/* =========================================================
+   PRODUCT SELECT
+   ========================================================= */
+function selectProduct(product, el) {
+  selectSingle(".product-card", productCardContainer, el);
+
+  currentProduct = product;
+  setElementorField("selectedProduct", product.name);
+
+  resetAfterProductChange();
+  renderDesigns(product);
+}
+
+/* =========================================================
+   DESIGNS
+   ========================================================= */
+function renderDesigns(product) {
+  designCardContainer.innerHTML = "";
+  designSection.style.display = "block";
+
+  product.designs.forEach(design => {
+    designCardContainer.appendChild(
+      createCard(design, el => {
+        selectSingle(".product-card", designCardContainer, el);
+        setElementorField("selectedDesign", design.name);
+
+        colorSection.style.display = "none";
+        setElementorField("selectedColor", "");
+
+        renderBreakdownAndPlacements(product);
+      })
+    );
+  });
+
+  // Solid color
+  designCardContainer.appendChild(
+    createCard(
+      {
+        name: "Solid color",
+        image:
+          "https://images.icon-icons.com/1238/PNG/512/blacksquare_83753.png",
+      },
+      el => {
+        selectSingle(".product-card", designCardContainer, el);
+        setElementorField("selectedDesign", "Solid color");
+
+        breakdownSection.style.display = "none";
+        logoSection.style.display = "none";
+
+        renderColors();
+      }
+    )
+  );
+}
+
+/* =========================================================
+   COLORS
+   ========================================================= */
+function renderColors() {
+  colorSelector.innerHTML = "";
+  colorSection.style.display = "block";
+
+  setElementorField("selectedColor", "");
+
+  brandColors?.forEach(color => {
+    const swatch = document.createElement("div");
+    swatch.className = "color-swatch";
+    swatch.style.backgroundColor = color.hex;
+
+    swatch.onclick = () => {
+      colorSelector
+        .querySelectorAll(".color-swatch")
+        .forEach(c => c.classList.remove("selected"));
+
+      swatch.classList.add("selected");
+      setElementorField("selectedColor", `${color.name} (${color.hex})`);
+
+      if (currentProduct) {
+        renderBreakdownAndPlacements(currentProduct);
+      }
+    };
+
+    colorSelector.appendChild(swatch);
+  });
+}
+
+/* =========================================================
+   BREAKDOWN + PLACEMENTS
+   ========================================================= */
+function renderBreakdownAndPlacements(product) {
+  if (!product.breakdown) return;
+
+  breakdownSection.style.display = "block";
+  logoSection.style.display = "block";
+
+  breakdownImage.src = product.breakdown.image;
+  logoSelectors.innerHTML = "";
+
+  const selected = [];
+
+  product.breakdown.placements.forEach(place => {
+    const wrapper = document.createElement("div");
+    wrapper.innerHTML = `<strong>${place}</strong>`;
+
+    const select = document.createElement("select");
+    select.innerHTML = `
+      <option value="">No logo</option>
+      <option value="Logo">Logo</option>
+      <option value="Text">Text</option>
+      <option value="Logo + Text">Logo + Text</option>
+    `;
+
+    select.onchange = () => {
+      const idx = selected.findIndex(p => p.place === place);
+      if (select.value) {
+        if (idx === -1) selected.push({ place, value: select.value });
+        else selected[idx].value = select.value;
+      } else if (idx !== -1) {
+        selected.splice(idx, 1);
+      }
+
+      setElementorField(
+        "selectedPlacements",
+        selected.map(p => `${p.place}: ${p.value}`).join(" | ")
+      );
+    };
+
+    wrapper.appendChild(select);
+    logoSelectors.appendChild(wrapper);
+  });
+}
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+function createCard(data, onClick) {
+  const card = document.createElement("div");
+  card.className = "product-card";
+  card.innerHTML = `
+    <img src="${data.image}">
+    <div>${data.name}</div>
+  `;
+  card.onclick = () => onClick(card);
+  return card;
+}
+
+function selectSingle(selector, container, el) {
+  container
+    .querySelectorAll(selector)
+    .forEach(c => c.classList.remove("selected"));
+  el.classList.add("selected");
+}
+</script>
