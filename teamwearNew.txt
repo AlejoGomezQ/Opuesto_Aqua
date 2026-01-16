@@ -83,7 +83,7 @@
   font-size: 15px;
 }
 
-/* ---- COLOR SELECTOR ---- */
+/* ================= COLOR SELECTOR ================= */
 .color-selector {
   display: flex;
   flex-wrap: wrap;
@@ -111,6 +111,13 @@
   border-color: #EF007F;
   box-shadow: 0 0 14px rgba(239, 0, 127, .45);
   transform: scale(1.18);
+}
+
+@media (max-width: 480px) {
+  .color-swatch {
+    width: 32px;
+    height: 32px;
+  }
 }
 
 /* ================= BADGE PRODUCT SELECTED ================= */
@@ -149,11 +156,18 @@
   }
 }
 
-@media (max-width: 480px) {
-  .color-swatch {
-    width: 32px;
-    height: 32px;
-  }
+/* ================= DISCLAIMER ================= */
+.design-disclaimer {
+  margin-top: 14px;
+  padding: 14px 16px;
+
+  font-size: 13px;
+  line-height: 1.45;
+
+  color: #555;
+  background: var(--op-light);
+  border-left: 4px solid var(--op-blue);
+  border-radius: 8px;
 }
 
 /* ================= RESPONSIVE ================= */
@@ -195,10 +209,16 @@
   <div id="colorSelector" class="color-selector"></div>
 </div>
 
-<!-- ================= DESPIECE ================= -->
+<!-- ================= BREAKDOWN ================= -->
 <div id="breakdownSection" style="display:none;">
   <label class="label-title"><strong>Garment breakdown</strong></label>
   <img id="breakdownImage" src="" style="width:100%; border-radius:14px; margin-top:12px;">
+  <p class="design-disclaimer">
+    Our mock-ups are intended to convey the concept and vision of your design.
+    They do not represent an accurate depiction of the finished garment as it
+    relates to design, fabric, colours, logo placement, and text placement.
+    These are solely for visual purposes.
+  </p>
 </div>
 
 <!-- ================= LOGO POSITIONS ================= -->
