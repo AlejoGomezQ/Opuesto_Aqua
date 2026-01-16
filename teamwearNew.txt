@@ -170,6 +170,42 @@
   border-radius: 8px;
 }
 
+/* ===== PLACEMENTS ===== */
+
+.placement-field {
+  margin-bottom: 16px;
+}
+
+.placement-title {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--op-black);
+}
+
+.placement-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--op-black);
+}
+
+/* Checkbox simple */
+.placement-checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* Nada raro cuando está seleccionado */
+.placement-checkbox:checked {
+  accent-color: var(--op-black);
+}
+
+
 /* ================= RESPONSIVE ================= */
 @media (max-width:1024px){
   .product-card-container { grid-template-columns: repeat(2,1fr); }
@@ -180,7 +216,7 @@
 </style>
 
 <!-- ================= CATEGORY ================= -->
-<label class="label-title">Category</label>
+<label class="label-title"><strong>Category</strong></label>
 <div class="select-wrapper">
   <select id="categorySelect">
     <option value="">Select a category...</option>
@@ -197,7 +233,7 @@
 <!-- ================= DESIGNS ================= -->
 <div id="designSection" style="display:none;">
   <label class="label-title">
-    Choose your design
+    <strong>Choose your design</strong>
     <span id="selectedProductLabel" class="product-badge"></span>
   </label> 
   <div id="designCardContainer" class="product-card-container"></div>
@@ -221,7 +257,7 @@
   </p>
 </div>
 
-<!-- ================= LOGO POSITIONS ================= -->
+<!-- ================= LOGO/TEXT PLACEMENTS ================= -->
 <div id="logoSection" style="display:none;">
   <label class="label-title"><strong>Logo / Text placement</strong></label>
   <div id="logoSelectors"></div>
@@ -288,10 +324,10 @@ const catalog = {
           image:
             "https://opuestoaqua.com/wp-content/uploads/2026/01/XTS-PLACEMENTS-scaled.jpg",
           placements: [
-            "Outside front waistband",
-            "Outside back waistband",
-            "Right front panel",
-            "Left front panel",
+            { name: "Outside front waistband", options: ["Logo"] },
+            { name: "Outside back waistband", options: ["Logo"] },
+            { name: "Right front panel", options: ["Logo"] },
+            { name: "Left front panel", options: ["Logo"] },
           ],
         },
       },
@@ -461,11 +497,11 @@ const catalog = {
           image:
             "https://opuestoaqua.com/wp-content/uploads/2026/01/CWB-PLACEMENTS-scaled.jpg",
           placements: [
-            "Front chest",
-            "Upper back",
-            "Sleeve left",
-            "Sleeve right",
-            "Lower back",
+            { name: "Front chest", options: ["Logo", "Text"] },
+            { name: "Upper back", options: ["Logo", "Text"] },
+            { name: "Sleeve left", options: ["Logo", "Text"] },
+            { name: "Sleeve right", options: ["Logo", "Text"] },
+            { name: "Lower back", options: ["Logo", "Text"] },
           ],
         },
       },
@@ -858,37 +894,51 @@ function renderBreakdownAndPlacements(product) {
   const selected = [];
 
   product.breakdown.placements.forEach(place => {
+    /* ================= WRAPPER ================= */
     const wrapper = document.createElement("div");
-    wrapper.innerHTML = `<strong>${place}</strong>`;
+    wrapper.className = "placement-field";
 
-    const select = document.createElement("select");
-    select.innerHTML = `
-      <option value="">No logo</option>
-      <option value="Logo">Logo</option>
-      <option value="Text">Text</option>
-      <option value="Logo + Text">Logo + Text</option>
-    `;
+    /* ================= TITLE ================= */
+    const title = document.createElement("strong");
+    title.className = "placement-title";
+    title.textContent = place.name;
+    wrapper.appendChild(title);
 
-    select.onchange = () => {
-      const idx = selected.findIndex(p => p.place === place);
-      if (select.value) {
-        if (idx === -1) selected.push({ place, value: select.value });
-        else selected[idx].value = select.value;
-      } else if (idx !== -1) {
-        selected.splice(idx, 1);
+    /* ================= OPTION ================= */
+    const option = place.options[0];
+
+    const label = document.createElement("label");
+    label.className = "placement-option";
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.className = "placement-checkbox";
+
+    checkbox.addEventListener("change", () => {
+      const value = `${place.name}: ${option}`;
+
+      if (checkbox.checked) {
+        if (!selected.includes(value)) {
+          selected.push(value);
+        }
+      } else {
+        const index = selected.indexOf(value);
+        if (index !== -1) selected.splice(index, 1);
       }
 
       setElementorField(
         "selectedPlacements",
-        selected.map(p => `${p.place}: ${p.value}`).join(" | ")
+        selected.join(" | ")
       );
-    };
+    });
 
-    const selectWrapper = document.createElement("div");
-    selectWrapper.className = "select-wrapper";
+    const span = document.createElement("span");
+    span.textContent = option;
 
-    selectWrapper.appendChild(select);
-    wrapper.appendChild(selectWrapper);
+    label.appendChild(checkbox);
+    label.appendChild(span);
+    wrapper.appendChild(label);
+
     logoSelectors.appendChild(wrapper);
   });
 }

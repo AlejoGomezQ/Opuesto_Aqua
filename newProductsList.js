@@ -49,10 +49,10 @@ const catalog = {
           image:
             "https://opuestoaqua.com/wp-content/uploads/2026/01/XTS-PLACEMENTS-scaled.jpg",
           placements: [
-            "Outside front waistband",
-            "Outside back waistband",
-            "Right front panel",
-            "Left front panel",
+            { name: "Outside front waistband", options: ["Logo"] },
+            { name: "Outside back waistband", options: ["Logo"] },
+            { name: "Right front panel", options: ["Logo"] },
+            { name: "Left front panel", options: ["Logo"] },
           ],
         },
       },
@@ -222,11 +222,11 @@ const catalog = {
           image:
             "https://opuestoaqua.com/wp-content/uploads/2026/01/CWB-PLACEMENTS-scaled.jpg",
           placements: [
-            "Front chest",
-            "Upper back",
-            "Sleeve left",
-            "Sleeve right",
-            "Lower back",
+            { name: "Front chest", options: ["Logo", "Text"] },
+            { name: "Upper back", options: ["Logo", "Text"] },
+            { name: "Sleeve left", options: ["Logo", "Text"] },
+            { name: "Sleeve right", options: ["Logo", "Text"] },
+            { name: "Lower back", options: ["Logo", "Text"] },
           ],
         },
       },
