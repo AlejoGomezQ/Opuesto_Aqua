@@ -11,8 +11,7 @@
 /* ================= LABEL ================= */
 .label-title {
   display: block;
-  margin: 24px 0 10px;
-  font-weight: 700;
+  margin: 24px 0 0px;
 }
 
 /* ================= SELECT ================= */
@@ -200,11 +199,13 @@
   cursor: pointer;
 }
 
-/* Nada raro cuando está seleccionado */
 .placement-checkbox:checked {
   accent-color: var(--op-black);
 }
 
+.hidden {
+  display: none !important;
+}
 
 /* ================= RESPONSIVE ================= */
 @media (max-width:1024px){
@@ -216,7 +217,7 @@
 </style>
 
 <!-- ================= CATEGORY ================= -->
-<label class="label-title"><strong>Category</strong></label>
+<label for="form-field-selectedCategory" class="label-title">Category</label>
 <div class="select-wrapper">
   <select id="categorySelect">
     <option value="">Select a category...</option>
@@ -232,8 +233,8 @@
 
 <!-- ================= DESIGNS ================= -->
 <div id="designSection" style="display:none;">
-  <label class="label-title">
-    <strong>Choose your design</strong>
+  <label for="form-field-selectedDesign" class="label-title">
+    Choose your design
     <span id="selectedProductLabel" class="product-badge"></span>
   </label> 
   <div id="designCardContainer" class="product-card-container"></div>
@@ -241,13 +242,13 @@
 
 <!-- ================= COLORS ================= -->
 <div id="colorSection" style="display:none;">
-  <label class="label-title"><strong>Color</strong></label>
+  <label for="form-field-selectedColor" class="label-title">Color</label>
   <div id="colorSelector" class="color-selector"></div>
 </div>
 
 <!-- ================= BREAKDOWN ================= -->
 <div id="breakdownSection" style="display:none;">
-  <label class="label-title"><strong>Garment breakdown</strong></label>
+  <label for="form-field-breakdown" class="label-title">Garment breakdown</label>
   <img id="breakdownImage" src="" style="width:100%; border-radius:14px; margin-top:12px;">
   <p class="design-disclaimer">
     Our mock-ups are intended to convey the concept and vision of your design.
@@ -259,7 +260,7 @@
 
 <!-- ================= LOGO/TEXT PLACEMENTS ================= -->
 <div id="logoSection" style="display:none;">
-  <label class="label-title"><strong>Logo / Text placement</strong></label>
+  <label for="form-field-selectedPlacements" class="label-title">Logo / Text placement</label>
   <div id="logoSelectors"></div>
 </div>
 
@@ -738,6 +739,7 @@ const logoSelectors = document.getElementById("logoSelectors");
    ESTADO
    ========================================================= */
 let currentProduct = null;
+let logoUploadField = null;
 
 /* =========================================================
    ELEMENTOR
@@ -762,6 +764,10 @@ function resetAfterProductChange() {
   setElementorField("selectedDesign", "");
   setElementorField("selectedColor", "");
   setElementorField("selectedPlacements", "");
+
+  if (logoUploadField) {
+    logoUploadField.classList.add("hidden");
+  }
 }
 
 /* =========================================================
@@ -930,6 +936,8 @@ function renderBreakdownAndPlacements(product) {
         "selectedPlacements",
         selected.join(" | ")
       );
+
+      toggleLogoUploadVisibility();
     });
 
     const span = document.createElement("span");
@@ -941,6 +949,23 @@ function renderBreakdownAndPlacements(product) {
 
     logoSelectors.appendChild(wrapper);
   });
+}
+
+/* =========================================================
+   LOGO UPLOAD
+   ========================================================= */
+function toggleLogoUploadVisibility() {
+  if (!logoUploadField) return;
+
+  const anyChecked = logoSelectors.querySelector(
+    'input[type="checkbox"]:checked'
+  );
+
+  if (anyChecked) {
+    logoUploadField.classList.remove("hidden");
+  } else {
+    logoUploadField.classList.add("hidden");
+  }
 }
 
 /* =========================================================
@@ -963,4 +988,23 @@ function selectSingle(selector, container, el) {
     .forEach(c => c.classList.remove("selected"));
   el.classList.add("selected");
 }
+
+function initLogoUploadField() {
+  const input = document.getElementById("form-field-uploadedFile");
+
+  if (!input) return;
+
+  const field = input.closest(".elementor-field-type-upload");
+
+  if (!field) return;
+
+  logoUploadField = field;
+  logoUploadField.classList.add("hidden");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  setTimeout(() => {
+    initLogoUploadField();
+  }, 300);
+});
 </script>
