@@ -113,6 +113,42 @@
   transform: scale(1.18);
 }
 
+/* ================= BADGE PRODUCT SELECTED ================= */
+.product-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 4px 12px;
+  margin-left: 10px;
+
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+
+  color: var(--op-blue);
+  background: rgba(0, 92, 255, 0.08);
+  border: 1px solid rgba(0, 92, 255, 0.35);
+  border-radius: 999px;
+
+  white-space: nowrap;
+  transition: all .25s ease;
+}
+
+.product-badge.is-visible {
+  animation: badgePop .3s ease;
+}
+
+@keyframes badgePop {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 480px) {
   .color-swatch {
     width: 32px;
@@ -148,7 +184,7 @@
 <div id="designSection" style="display:none;">
   <label class="label-title">
     Choose your design
-    <span id="selectedProductLabel" style="font-weight:400; opacity:.7; margin-left:8px;"></span>
+    <span id="selectedProductLabel" class="product-badge"></span>
   </label> 
   <div id="designCardContainer" class="product-card-container"></div>
 </div>
@@ -684,6 +720,7 @@ categorySelect.addEventListener("change", e => {
 
   if (selectedProductLabel) {
     selectedProductLabel.textContent = "";
+    selectedProductLabel.classList.add("is-visible");
   }
 
   const products = catalog.categories[e.target.value] || [];
@@ -705,7 +742,8 @@ function selectProduct(product, el) {
   setElementorField("selectedProduct", product.name);
 
   if (selectedProductLabel) {
-    selectedProductLabel.textContent = `(${product.name})`;
+    selectedProductLabel.textContent = `${product.name}`;
+    selectedProductLabel.classList.add("is-visible");
   }
 
   resetAfterProductChange();
