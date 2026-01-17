@@ -268,6 +268,7 @@
 <input type="hidden" id="selectedProduct" name="selectedProduct">
 <input type="hidden" id="selectedDesign" name="selectedDesign">
 <input type="hidden" id="selectedColor" name="selectedColor">
+<input type="hidden" id="selectedDesignImage" name="selectedDesignImage">
 <input type="hidden" id="selectedPlacements" name="selectedPlacements">
 
 <script>
@@ -763,6 +764,7 @@ function resetAfterProductChange() {
 
   setElementorField("selectedDesign", "");
   setElementorField("selectedColor", "");
+  setElementorField("selectedDesignImage", "");
   setElementorField("selectedPlacements", "");
 
   if (logoUploadField) {
@@ -824,9 +826,10 @@ function renderDesigns(product) {
       createCard(design, el => {
         selectSingle(".product-card", designCardContainer, el);
         setElementorField("selectedDesign", design.name);
+        setElementorField("selectedDesignImage", design.image);
 
         colorSection.style.display = "none";
-        setElementorField("selectedColor", "");
+        setElementorField("selectedColor", "N/A (Design selected)");
 
         renderBreakdownAndPlacements(product);
       })
@@ -844,6 +847,7 @@ function renderDesigns(product) {
       el => {
         selectSingle(".product-card", designCardContainer, el);
         setElementorField("selectedDesign", "Solid color");
+        setElementorField("selectedDesignImage", "");
 
         breakdownSection.style.display = "none";
         logoSection.style.display = "none";
@@ -921,7 +925,7 @@ function renderBreakdownAndPlacements(product) {
     checkbox.className = "placement-checkbox";
 
     checkbox.addEventListener("change", () => {
-      const value = `${place.name}: ${option}`;
+      const value = `• ${place.name}: ${option}`;
 
       if (checkbox.checked) {
         if (!selected.includes(value)) {
@@ -934,7 +938,7 @@ function renderBreakdownAndPlacements(product) {
 
       setElementorField(
         "selectedPlacements",
-        selected.join(" | ")
+        selected.join("<br>")
       );
 
       toggleLogoUploadVisibility();
