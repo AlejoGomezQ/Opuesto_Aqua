@@ -13,11 +13,15 @@ const catalog = {
             name: "XTS - Design 1",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/4-XTS-SUB01-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/4-XTS-SUB01-FRONT.png",
           },
           {
             id: "xts_design_2",
             name: "XTS - Design 2",
             image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/5-XTS-SUB01-FRONT.png",
+            fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/5-XTS-SUB01-FRONT.png",
           },
           {
@@ -25,11 +29,15 @@ const catalog = {
             name: "XTS - Design 3",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/8-XTS-SUB01-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/8-XTS-SUB01-FRONT.png",
           },
           {
             id: "xts_design_4",
             name: "XTS - Design 4",
             image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/16-XTS-SUB01-FRONT.png",
+            fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/16-XTS-SUB01-FRONT.png",
           },
           {
@@ -37,11 +45,15 @@ const catalog = {
             name: "XTS - Design 5",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/24-XTS-SUB01-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/24-XTS-SUB01-FRONT.png",
           },
           {
             id: "xts_design_6",
             name: "Build your own design",
             image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/4-XTS-SUB01-FRONT.png",
+            fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/4-XTS-SUB01-FRONT.png",
           },
         ],
@@ -70,11 +82,15 @@ const catalog = {
             name: "JGR - Design 1",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/1-JGR-SUB01-2-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-JGR-SUB01-2-FRONT.png",
           },
           {
             id: "jgr_design_2",
             name: "JGR - Design 2",
             image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-JGR-SUB01-FRONT.png",
+            fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/1-JGR-SUB01-FRONT.png",
           },
           {
@@ -82,11 +98,15 @@ const catalog = {
             name: "JGR - Design 3",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/3-JGR-SUB01-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/3-JGR-SUB01-FRONT.png",
           },
           {
             id: "jgr_design_4",
             name: "JGR - Design 4",
             image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/6-JGR-SUB01-FRONT.png",
+            fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/6-JGR-SUB01-FRONT.png",
           },
           {
@@ -94,17 +114,23 @@ const catalog = {
             name: "JGR - Design 5",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/9-JGR-SUB01-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/9-JGR-SUB01-FRONT.png",
           },
           {
             id: "jgr_design_6",
             name: "JGR - Design 6",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/15-JGR-SUB01-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/15-JGR-SUB01-FRONT.png",
           },
           {
             id: "jgr_design_7",
             name: "Build your own design",
             image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-JGR-SUB01-2-FRONT.png",
+            fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/1-JGR-SUB01-2-FRONT.png",
           },
         ],
@@ -122,11 +148,15 @@ const catalog = {
             name: "WUP - Design 1",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/2-WUP-SUB-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/2-WUP-SUB-FRONT.png",
           },
           {
             id: "wup_design_2",
             name: "WUP - Design 2",
             image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/7-WUP-SUB-FRONT.png",
+            fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/7-WUP-SUB-FRONT.png",
           },
           {
@@ -134,11 +164,15 @@ const catalog = {
             name: "WUP - Design 3",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/10-WUP-SUB-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/10-WUP-SUB-FRONT.png",
           },
           {
             id: "wup_design_4",
             name: "Build your own design",
             image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/7-WUP-SUB-FRONT.png",
+            fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/7-WUP-SUB-FRONT.png",
           },
         ],
@@ -158,11 +192,15 @@ const catalog = {
             name: "WBJ - Design 1",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/2-WBJ-SUB01-2-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/2-WBJ-SUB01-2-FRONT.png",
           },
           {
             id: "wbj_design_2",
             name: "WBJ - Design 2",
             image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/2-WBJ-SUB01-FRONT.png",
+            fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/2-WBJ-SUB01-FRONT.png",
           },
           {
@@ -170,17 +208,23 @@ const catalog = {
             name: "WBJ - Design 3",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/7-WBJ-SUB01-M-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/7-WBJ-SUB01-M-FRONT.png",
           },
           {
             id: "wbj_design_4",
             name: "WBJ - Design 4",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/10-WBJ-SUB01-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/10-WBJ-SUB01-FRONT.png",
           },
           {
             id: "wbj_design_5",
             name: "Build your own design",
             image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/2-WBJ-SUB01-2-FRONT.png",
+            fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/2-WBJ-SUB01-2-FRONT.png",
           },
         ],
@@ -198,11 +242,15 @@ const catalog = {
             name: "CWB - Design 1",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/4-CWB-SUB-FRONT-NEW.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/4-CWB-SUB-FRONT-NEW.png",
           },
           {
             id: "cwb_design_2",
             name: "CWB - Design 2",
             image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/5-CWB-SUB-FRONT-NEW.png",
+            fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/5-CWB-SUB-FRONT-NEW.png",
           },
           {
@@ -210,11 +258,15 @@ const catalog = {
             name: "CWB - Design 3",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/16-CWB-SUB-FRONT-NEW.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/16-CWB-SUB-FRONT-NEW.png",
           },
           {
             id: "cwb_design_4",
             name: "Build your own design",
             image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/4-CWB-SUB-FRONT-NEW.png",
+            fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/4-CWB-SUB-FRONT-NEW.png",
           },
         ],
@@ -242,11 +294,15 @@ const catalog = {
             name: "BJT - Design 1",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/1-BJT-SUB-2-FRONT-NEW.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-BJT-SUB-2-FRONT-NEW.png",
           },
           {
             id: "bjt_design_2",
             name: "BJT - Design 2",
             image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-BJT-SUB-FRONT-NEW.png",
+            fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/1-BJT-SUB-FRONT-NEW.png",
           },
           {
@@ -254,11 +310,15 @@ const catalog = {
             name: "BJT - Design 3",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/3-BJT-SUB-FRONT-NEW.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/3-BJT-SUB-FRONT-NEW.png",
           },
           {
             id: "bjt_design_4",
             name: "BJT - Design 4",
             image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/6-BJT-SUB-FRONT-NEW.png",
+            fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/6-BJT-SUB-FRONT-NEW.png",
           },
           {
@@ -266,17 +326,23 @@ const catalog = {
             name: "BJT - Design 5",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/9-BJT-SUB-FRONT-NEW.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/9-BJT-SUB-FRONT-NEW.png",
           },
           {
             id: "bjt_design_6",
             name: "BJT - Design 6",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/15-BJT-SUB-FRONT-NEW.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/15-BJT-SUB-FRONT-NEW.png",
           },
           {
             id: "bjt_design_7",
             name: "Build your own design",
             image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/15-BJT-SUB-FRONT-NEW.png",
+            fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/15-BJT-SUB-FRONT-NEW.png",
           },
         ],
@@ -296,11 +362,15 @@ const catalog = {
             name: "SLD - Design 1",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/1-SLD-SUB01.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-SLD-SUB01.png",
           },
           {
             id: "sld_design_2",
             name: "SLD - Design 2",
             image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-SLD-SUB01-2-NEW.png",
+            fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/1-SLD-SUB01-2-NEW.png",
           },
           {
@@ -308,17 +378,23 @@ const catalog = {
             name: "SLD - Design 3",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/4-SLD-SUB01.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/4-SLD-SUB01.png",
           },
           {
             id: "sld_design_4",
             name: "SLD - Design 4",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/24-SLD-SUB01.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/24-SLD-SUB01.png",
           },
           {
             id: "sld_design_5",
             name: "Build your own design",
             image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-SLD-SUB01.png",
+            fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/1-SLD-SUB01.png",
           },
         ],
@@ -336,11 +412,15 @@ const catalog = {
             name: "THS - Design 1",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/2-THS-SUB01.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/2-THS-SUB01.png",
           },
           {
             id: "ths_design_2",
             name: "THS - Design 2",
             image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/3-THS-SUB01.png",
+            fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/3-THS-SUB01.png",
           },
           {
@@ -348,11 +428,15 @@ const catalog = {
             name: "THS - Design 3",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/21-THS-SUB01.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/21-THS-SUB01.png",
           },
           {
             id: "ths_design_4",
             name: "Build your own design",
             image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/2-THS-SUB01.png",
+            fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/2-THS-SUB01.png",
           },
         ],
@@ -370,11 +454,15 @@ const catalog = {
             name: "BCK - Design 1",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/8-MOCKUP-BCK-SUB01.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/8-MOCKUP-BCK-SUB01.png",
           },
           {
             id: "bck_design_2",
             name: "BCK - Design 2",
             image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/16-MOCKUP-BCK-SUB01.png",
+            fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/16-MOCKUP-BCK-SUB01.png",
           },
           {
@@ -382,17 +470,23 @@ const catalog = {
             name: "BCK - Design 3",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/23-MOCKUP-BCK-SUB01-B.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/23-MOCKUP-BCK-SUB01-B.png",
           },
           {
             id: "bck_design_4",
             name: "BCK - Design 4",
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/8-MOCKUP-BCK-SUB01-B.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/8-MOCKUP-BCK-SUB01-B.png",
           },
           {
             id: "bck_design_5",
             name: "Build your own design",
             image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/8-MOCKUP-BCK-SUB01.png",
+            fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/8-MOCKUP-BCK-SUB01.png",
           },
         ],
