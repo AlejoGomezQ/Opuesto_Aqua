@@ -1,9 +1,10 @@
 <style>
 /* ================= BRAND PALETTE ================= */
 :root {
-  --op-blue: #005CFF;
-  --op-pink: #FF2E98;
-  --op-purple: #5D00FF;
+  --op-darkBlue: #050E35;
+  --op-blue: #519CAB;
+  --op-lightBlue: #C3E7F1;
+  --op-yellow: #FFC64F;
   --op-black: #111111;
   --op-light: #F5F5F7;
 }
@@ -65,7 +66,7 @@
 }
 
 .product-card.selected {
-  border-color: var(--op-blue);
+  border-color: var(--op-darkBlue);
   box-shadow: 0 6px 20px rgba(0,92,255,.25);
 }
 
@@ -107,8 +108,8 @@
 }
 
 .color-swatch.selected {
-  border-color: #EF007F;
-  box-shadow: 0 0 14px rgba(239, 0, 127, .45);
+  border-color: var(--op-blue);
+  box-shadow: 0 0 14px rgba(0,92,255,.15);
   transform: scale(1.18);
 }
 
@@ -131,9 +132,9 @@
   font-weight: 600;
   line-height: 1;
 
-  color: var(--op-blue);
+  color: var(--op-darkBlue);
   background: rgba(0, 92, 255, 0.08);
-  border: 1px solid rgba(0, 92, 255, 0.35);
+  border: 1px solid var(--op-darkBlue);
   border-radius: 999px;
 
   white-space: nowrap;
@@ -165,7 +166,7 @@
 
   color: #555;
   background: var(--op-light);
-  border-left: 4px solid var(--op-blue);
+  border-left: 4px solid var(--op-yellow);
   border-radius: 8px;
 }
 
@@ -925,7 +926,11 @@ function renderDesigns(product) {
         colorSection.style.display = "none";
         setElementorField("selectedColor", "N/A (Design selected)");
 
-        renderBreakdownAndPlacements(product);
+        if (design.name === "Build your own design") {
+          renderBreakdownAndPlacements(product, "breakdown");
+        } else {
+          renderBreakdownAndPlacements(product, "fullDesign", design.fullDesign);
+        }
       })
     );
   });
@@ -975,7 +980,7 @@ function renderColors() {
       setElementorField("selectedColor", `${color.name} (${color.hex})`);
 
       if (currentProduct) {
-        renderBreakdownAndPlacements(currentProduct);
+        renderBreakdownAndPlacements(currentProduct, "breakdown");
       }
     };
 
@@ -986,13 +991,18 @@ function renderColors() {
 /* =========================================================
    BREAKDOWN + PLACEMENTS
    ========================================================= */
-function renderBreakdownAndPlacements(product) {
+function renderBreakdownAndPlacements(product, mode = "breakdown", fullDesignImage = "") {
   if (!product.breakdown) return;
 
   breakdownSection.style.display = "block";
   logoSection.style.display = "block";
 
-  breakdownImage.src = product.breakdown.image;
+  if (mode === "fullDesign" && fullDesignImage) {
+    breakdownImage.src = fullDesignImage;
+  } else {
+    breakdownImage.src = product.breakdown.image;
+  }
+
   logoSelectors.innerHTML = "";
 
   const selected = [];
@@ -1106,5 +1116,3 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 300);
 });
 </script>
-
-
