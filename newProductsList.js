@@ -295,7 +295,7 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/1-BJT-SUB-2-FRONT-NEW.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-BJT-SUB-2-FRONT-NEW.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1B-BJT-SUB.webp",
           },
           {
             id: "bjt_design_2",
@@ -303,7 +303,7 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/1-BJT-SUB-FRONT-NEW.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-BJT-SUB-FRONT-NEW.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-BJT-SUB.webp",
           },
           {
             id: "bjt_design_3",
@@ -311,7 +311,7 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/3-BJT-SUB-FRONT-NEW.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/3-BJT-SUB-FRONT-NEW.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/3-BJT-SUB-NEW.webp",
           },
           {
             id: "bjt_design_4",
@@ -319,7 +319,7 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/6-BJT-SUB-FRONT-NEW.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/6-BJT-SUB-FRONT-NEW.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/6-BJT-SUB.webp",
           },
           {
             id: "bjt_design_5",
@@ -327,7 +327,7 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/9-BJT-SUB-FRONT-NEW.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/9-BJT-SUB-FRONT-NEW.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/9-BJT-SUB.webp",
           },
           {
             id: "bjt_design_6",
@@ -335,7 +335,7 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/15-BJT-SUB-FRONT-NEW.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/15-BJT-SUB-FRONT-NEW.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/15-BJT-SUB.webp",
           },
           {
             id: "bjt_design_7",
@@ -346,7 +346,16 @@ const catalog = {
               "https://opuestoaqua.com/wp-content/uploads/2026/01/15-BJT-SUB-FRONT-NEW.png",
           },
         ],
-        breakdown: null,
+        breakdown: {
+          placements: [
+            { name: "Right sleeve", options: ["Logo", "Text", "Name"] },
+            { name: "Right front panel", options: ["Name"] },
+            { name: "Left front panel", options: ["Logo"] },
+            { name: "Left sleeve", options: ["Logo", "Text", "Name"] },
+            { name: "Outside collar", options: ["Logo", "Name"] },
+            { name: "Back", options: ["Logo"] },
+          ],
+        },
       },
     ],
     accessories: [

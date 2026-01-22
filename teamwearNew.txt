@@ -573,7 +573,7 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/1-BJT-SUB-2-FRONT-NEW.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-BJT-SUB-2-FRONT-NEW.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1B-BJT-SUB.webp",
           },
           {
             id: "bjt_design_2",
@@ -581,7 +581,7 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/1-BJT-SUB-FRONT-NEW.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-BJT-SUB-FRONT-NEW.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-BJT-SUB.webp",
           },
           {
             id: "bjt_design_3",
@@ -589,7 +589,7 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/3-BJT-SUB-FRONT-NEW.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/3-BJT-SUB-FRONT-NEW.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/3-BJT-SUB-NEW.webp",
           },
           {
             id: "bjt_design_4",
@@ -597,7 +597,7 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/6-BJT-SUB-FRONT-NEW.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/6-BJT-SUB-FRONT-NEW.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/6-BJT-SUB.webp",
           },
           {
             id: "bjt_design_5",
@@ -605,7 +605,7 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/9-BJT-SUB-FRONT-NEW.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/9-BJT-SUB-FRONT-NEW.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/9-BJT-SUB.webp",
           },
           {
             id: "bjt_design_6",
@@ -613,7 +613,7 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/15-BJT-SUB-FRONT-NEW.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/15-BJT-SUB-FRONT-NEW.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/15-BJT-SUB.webp",
           },
           {
             id: "bjt_design_7",
@@ -624,7 +624,16 @@ const catalog = {
               "https://opuestoaqua.com/wp-content/uploads/2026/01/15-BJT-SUB-FRONT-NEW.png",
           },
         ],
-        breakdown: null,
+        breakdown: {
+          placements: [
+            { name: "Right sleeve", options: ["Logo", "Text", "Name"] },
+            { name: "Right front panel", options: ["Name"] },
+            { name: "Left front panel", options: ["Logo"] },
+            { name: "Left sleeve", options: ["Logo", "Text", "Name"] },
+            { name: "Outside collar", options: ["Logo", "Name"] },
+            { name: "Back", options: ["Logo"] },
+          ],
+        },
       },
     ],
     accessories: [
@@ -991,21 +1000,26 @@ function renderColors() {
 /* =========================================================
    BREAKDOWN + PLACEMENTS
    ========================================================= */
-function renderBreakdownAndPlacements(product, mode = "breakdown", fullDesignImage = "") {
-  if (!product.breakdown) return;
+function renderBreakdownAndPlacements(product, mode = "breakdown", fullDesignImage = null) {
+  if (!product.breakdown && mode !== "fullDesign") return;
 
   breakdownSection.style.display = "block";
   logoSection.style.display = "block";
 
-  if (mode === "fullDesign" && fullDesignImage) {
-    breakdownImage.src = fullDesignImage;
-  } else {
-    breakdownImage.src = product.breakdown.image;
-  }
+  const imageToRender =
+    mode === "fullDesign" && fullDesignImage
+      ? fullDesignImage
+      : product.breakdown?.image;
+
+  if (!imageToRender) return;
+
+  breakdownImage.src = imageToRender;
 
   logoSelectors.innerHTML = "";
 
-  const selected = [];
+  const selected = {};
+
+  if (!product.breakdown?.placements) return;
 
   product.breakdown.placements.forEach(place => {
     /* ================= WRAPPER ================= */
@@ -1019,32 +1033,37 @@ function renderBreakdownAndPlacements(product, mode = "breakdown", fullDesignIma
     wrapper.appendChild(title);
 
     /* ================= OPTION ================= */
-    const option = place.options[0];
-
-    const label = document.createElement("label");
-    label.className = "placement-option";
+    place.options.forEach(option => {
+      const label = document.createElement("label");
+      label.className = "placement-option";
 
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.className = "placement-checkbox";
 
     checkbox.addEventListener("change", () => {
-      const value = `• ${place.name}: ${option}`;
-
-      if (checkbox.checked) {
-        if (!selected.includes(value)) {
-          selected.push(value);
-        }
-      } else {
-        const index = selected.indexOf(value);
-        if (index !== -1) selected.splice(index, 1);
+      if (!selected[place.name]) {
+        selected[place.name] = [];
       }
 
-      setElementorField(
-        "selectedPlacements",
-        selected.join("<br>")
-      );
+      if (checkbox.checked) {
+        if (!selected[place.name].includes(option)) {
+          selected[place.name].push(option);
+        }
+      } else {
+        const idx = selected[place.name].indexOf(option);
+        if (idx !== -1) selected[place.name].splice(idx, 1);
 
+        if (selected[place.name].length === 0) {
+          delete selected[place.name];
+        }
+      }
+
+      const formatted = Object.entries(selected)
+        .map(([name, options]) => `• ${name}: ${options.join(", ")}`)
+        .join("<br>");
+
+      setElementorField("selectedPlacements", formatted);
       toggleLogoUploadVisibility();
     });
 
@@ -1054,6 +1073,8 @@ function renderBreakdownAndPlacements(product, mode = "breakdown", fullDesignIma
     label.appendChild(checkbox);
     label.appendChild(span);
     wrapper.appendChild(label);
+  });
+
 
     logoSelectors.appendChild(wrapper);
   });
