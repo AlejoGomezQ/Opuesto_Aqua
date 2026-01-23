@@ -908,6 +908,8 @@ function resetAfterProductChange() {
   if (logoUploadField) {
     logoUploadField.classList.add("hidden");
   }
+
+  toggleLogoUploadVisibility();
 }
 
 /* =========================================================
@@ -962,6 +964,7 @@ function renderDesigns(product) {
   product.designs.forEach(design => {
     designCardContainer.appendChild(
       createCard(design, el => {
+        resetMode();
         selectSingle(".product-card", designCardContainer, el);
 
         setElementorField("selectedDesign", design.name);
@@ -990,12 +993,14 @@ function renderDesigns(product) {
           "https://images.icon-icons.com/1238/PNG/512/blacksquare_83753.png",
       },
       el => {
+        resetMode();
         selectSingle(".product-card", designCardContainer, el);
 
         setElementorField("selectedDesign", "Solid color");
         setElementorField("selectedDesignImage", "");
         setElementorField("selectedPlacements", "");
 
+        toggleLogoUploadVisibility();
         showColorFlow();
         renderColors();
       }
@@ -1023,6 +1028,9 @@ function renderColors() {
         .forEach(c => c.classList.remove("selected"));
 
       swatch.classList.add("selected");
+
+      resetBreakdownOnly();
+
       setElementorField("selectedColor", `${color.name} (${color.hex})`);
 
       if (currentProduct) {
@@ -1153,6 +1161,8 @@ function renderBreakdownAndPlacements(
 
   if (!product.breakdown?.placements) return;
   renderPlacements(product.breakdown.placements);
+
+  toggleLogoUploadVisibility();
 }
 
 /* =========================================================
@@ -1198,6 +1208,27 @@ function initLogoUploadField() {
 
   logoUploadField = field;
   logoUploadField.classList.add("hidden");
+}
+
+function resetMode() {
+  colorSection.style.display = "none";
+  breakdownSection.style.display = "none";
+  logoSection.style.display = "none";
+
+  breakdownImage.src = "";
+  logoSelectors.innerHTML = "";
+
+  setElementorField("selectedPlacements", "");
+}
+
+function resetBreakdownOnly() {
+  breakdownSection.style.display = "none";
+  logoSection.style.display = "none";
+
+  breakdownImage.src = "";
+  logoSelectors.innerHTML = "";
+
+  setElementorField("selectedPlacements", "");
 }
 
 document.addEventListener("DOMContentLoaded", () => {
