@@ -1,0 +1,215 @@
+<style>
+:root {
+  --op-darkBlue: #050E35;
+  --op-blue: #519CAB;
+  --op-black: #111111;
+  --op-light: #F5F5F7;
+}
+
+/* ===== LABEL ===== */
+.label-title {
+  display: block;
+  margin: 8px 0 8px;
+  font-weight: 600;
+}
+
+/* ===== INPUT ===== */
+.op-input,
+.op-select {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 2px solid var(--op-black);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* ===== GRID ===== */
+.namesGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 20px;
+  margin-top: 16px;
+}
+
+/* ===== ROW ===== */
+.product-row {
+  display: contents;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 640px) {
+  .namesGrid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<!-- ===== AMOUNT ===== -->
+<label class="label-title">Amount of products</label>
+<input
+  id="amountProducts"
+  type="number"
+  min="1"
+  class="op-input"
+  placeholder="Enter amount (min 1)"
+/>
+
+<!-- ===== DYNAMIC FIELDS ===== -->
+<div id="namesContainer" class="namesGrid"></div>
+
+<!-- ================= HIDDEN ================= -->
+<input type="hidden" id="productsSummary" name="productsSummary">
+<input type="hidden" id="productsTableHtml" name="productsTableHtml">
+
+<script>
+/* ================= CONFIG ================= */
+const MAX_PRODUCTS = 20;
+const AVAILABLE_SIZES = ["XS", "S", "M", "L", "XL", "XXL"];
+
+/* ================= DOM ================= */
+const amountInput = document.getElementById("amountProducts");
+const namesContainer = document.getElementById("namesContainer");
+const productsSummaryField = document.getElementById("productsSummary");
+
+/* ================= STATE ================= */
+let uploadedNamesFileField = null;
+
+/* ================= INIT FILE FIELD ================= */
+function initUploadedNamesFileField() {
+  const input = document.getElementById("form-field-uploadedNamesFile");
+  if (!input) return;
+
+  const field = input.closest(".elementor-field-type-upload");
+  if (!field) return;
+
+  uploadedNamesFileField = field;
+  uploadedNamesFileField.classList.add("hidden");
+}
+
+/* ================= VISIBILITY ================= */
+function showUploadedNamesFile() {
+  if (!uploadedNamesFileField) return;
+  uploadedNamesFileField.classList.remove("hidden");
+}
+
+function hideUploadedNamesFile() {
+  if (!uploadedNamesFileField) return;
+  uploadedNamesFileField.classList.add("hidden");
+}
+
+/* ================= EVENTS ================= */
+amountInput.addEventListener("input", () => {
+  let amount = parseInt(amountInput.value, 10);
+
+  /* ===== RESET ===== */
+  if (isNaN(amount) || amount < 1) {
+    namesContainer.innerHTML = "";
+    productsSummaryField.value = "";
+    hideUploadedNamesFile();
+    return;
+  }
+
+  /* ===== EXCEEDS MAX ===== */
+  if (amount > MAX_PRODUCTS) {
+    namesContainer.innerHTML = "";
+    productsSummaryField.value = "";
+    showUploadedNamesFile();
+    return;
+  }
+
+  /* ===== NORMAL FLOW ===== */
+  hideUploadedNamesFile();
+  renderProductFields(amount);
+});
+
+/* ================= RENDER ================= */
+function renderProductFields(amount) {
+  namesContainer.innerHTML = "";
+
+  for (let i = 1; i <= amount; i++) {
+    namesContainer.appendChild(createNameField(i));
+    namesContainer.appendChild(createSizeField(i));
+  }
+
+  updateProductsSummary();
+}
+
+/* ================= FIELDS ================= */
+function createNameField(index) {
+  const input = document.createElement("input");
+  input.type = "text";
+  input.className = "op-input";
+  input.placeholder = `Name ${index}`;
+  input.name = `product_name_${index}`;
+
+  input.addEventListener("input", updateProductsSummary);
+
+  return input;
+}
+
+function createSizeField(index) {
+  const select = document.createElement("select");
+  select.className = "op-select";
+  select.name = `product_size_${index}`;
+
+  const placeholder = document.createElement("option");
+  placeholder.value = "";
+  placeholder.textContent = `Size ${index}`;
+  placeholder.disabled = true;
+  placeholder.selected = true;
+
+  select.appendChild(placeholder);
+
+  AVAILABLE_SIZES.forEach(size => {
+    const option = document.createElement("option");
+    option.value = size;
+    option.textContent = size;
+    select.appendChild(option);
+  });
+
+  select.addEventListener("change", updateProductsSummary);
+
+  return select;
+}
+
+/* ================= SUMMARY ================= */
+function updateProductsSummary() {
+  const amount = parseInt(amountInput.value, 10);
+
+  if (isNaN(amount) || amount < 1 || amount > MAX_PRODUCTS) {
+    productsSummaryField.value = "";
+    return;
+  }
+
+  const products = [];
+
+  for (let i = 1; i <= amount; i++) {
+    const nameInput = document.querySelector(
+      `input[name="product_name_${i}"]`
+    );
+    const sizeSelect = document.querySelector(
+      `select[name="product_size_${i}"]`
+    );
+
+    if (!nameInput || !sizeSelect) continue;
+
+    products.push({
+      name: nameInput.value || "",
+      size: sizeSelect.value || "",
+    });
+  }
+
+  productsSummaryField.value = JSON.stringify(products);
+}
+
+/* ================= INIT ================= */
+document.addEventListener("DOMContentLoaded", () => {
+  setTimeout(initUploadedNamesFileField, 300);
+});
+</script>
+
