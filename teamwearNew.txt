@@ -174,6 +174,9 @@
 
 .placement-field {
   margin-bottom: 16px;
+  background: #fafafa;
+  padding: 12px 14px;
+  border-radius: 8px;
 }
 
 .placement-title {
@@ -202,6 +205,12 @@
 
 .placement-checkbox:checked {
   accent-color: var(--op-black);
+}
+
+.logo-selectors {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px 32px;
 }
 
 .hidden {
@@ -858,13 +867,38 @@ function setElementorField(fieldName, value) {
 }
 
 /* =========================================================
-   RESET
+   VISIBILITY FLOWS
    ========================================================= */
-function resetAfterProductChange() {
+function hideAllFlows() {
   designSection.style.display = "none";
   colorSection.style.display = "none";
   breakdownSection.style.display = "none";
   logoSection.style.display = "none";
+}
+
+function showDesignFlow() {
+  designSection.style.display = "block";
+  colorSection.style.display = "none";
+  breakdownSection.style.display = "none";
+  logoSection.style.display = "none";
+}
+
+function showColorFlow() {
+  colorSection.style.display = "block";
+  breakdownSection.style.display = "none";
+  logoSection.style.display = "none";
+}
+
+function showBreakdownFlow() {
+  breakdownSection.style.display = "block";
+  logoSection.style.display = "block";
+}
+
+/* =========================================================
+   RESET
+   ========================================================= */
+function resetAfterProductChange() {
+  hideAllFlows();
 
   setElementorField("selectedDesign", "");
   setElementorField("selectedColor", "");
@@ -910,7 +944,7 @@ function selectProduct(product, el) {
   setElementorField("selectedProduct", product.name);
 
   if (selectedProductLabel) {
-    selectedProductLabel.textContent = `${product.name}`;
+    selectedProductLabel.textContent = product.name;
     selectedProductLabel.classList.add("is-visible");
   }
 
@@ -923,22 +957,25 @@ function selectProduct(product, el) {
    ========================================================= */
 function renderDesigns(product) {
   designCardContainer.innerHTML = "";
-  designSection.style.display = "block";
+  showDesignFlow();
 
   product.designs.forEach(design => {
     designCardContainer.appendChild(
       createCard(design, el => {
         selectSingle(".product-card", designCardContainer, el);
+
         setElementorField("selectedDesign", design.name);
         setElementorField("selectedDesignImage", design.image);
-
-        colorSection.style.display = "none";
         setElementorField("selectedColor", "N/A (Design selected)");
 
         if (design.name === "Build your own design") {
           renderBreakdownAndPlacements(product, "breakdown");
         } else {
-          renderBreakdownAndPlacements(product, "fullDesign", design.fullDesign);
+          renderBreakdownAndPlacements(
+            product,
+            "fullDesign",
+            design.fullDesign
+          );
         }
       })
     );
@@ -954,12 +991,12 @@ function renderDesigns(product) {
       },
       el => {
         selectSingle(".product-card", designCardContainer, el);
+
         setElementorField("selectedDesign", "Solid color");
         setElementorField("selectedDesignImage", "");
+        setElementorField("selectedPlacements", "");
 
-        breakdownSection.style.display = "none";
-        logoSection.style.display = "none";
-
+        showColorFlow();
         renderColors();
       }
     )
@@ -971,7 +1008,7 @@ function renderDesigns(product) {
    ========================================================= */
 function renderColors() {
   colorSelector.innerHTML = "";
-  colorSection.style.display = "block";
+  showColorFlow();
 
   setElementorField("selectedColor", "");
 
@@ -1000,84 +1037,122 @@ function renderColors() {
 /* =========================================================
    BREAKDOWN + PLACEMENTS
    ========================================================= */
-function renderBreakdownAndPlacements(product, mode = "breakdown", fullDesignImage = null) {
-  if (!product.breakdown && mode !== "fullDesign") return;
 
-  breakdownSection.style.display = "block";
-  logoSection.style.display = "block";
+/* ================= CONDITIONS ================= */
+function shouldRenderBreakdown(product, mode) {
+  return product.breakdown || mode === "fullDesign";
+}
 
+/* ================= IMAGE ================= */
+function renderBreakdownImage(product, mode, fullDesignImage) {
   const imageToRender =
     mode === "fullDesign" && fullDesignImage
       ? fullDesignImage
       : product.breakdown?.image;
 
   if (!imageToRender) return;
-
   breakdownImage.src = imageToRender;
+}
 
+/* ================= FORMAT ================= */
+function formatPlacements(selected) {
+  return Object.entries(selected)
+    .map(([name, options]) => `• ${name}: ${options.join(", ")}`)
+    .join("<br>");
+}
+
+/* ================= STATE ================= */
+function updateSelectedPlacements(selected, placeName, option, isChecked) {
+  if (!selected[placeName]) selected[placeName] = [];
+
+  if (isChecked) {
+    if (!selected[placeName].includes(option)) {
+      selected[placeName].push(option);
+    }
+  } else {
+    selected[placeName] = selected[placeName].filter(o => o !== option);
+    if (selected[placeName].length === 0) {
+      delete selected[placeName];
+    }
+  }
+
+  setElementorField("selectedPlacements", formatPlacements(selected));
+  toggleLogoUploadVisibility();
+}
+
+/* ================= OPTION UI ================= */
+function createPlacementOption(place, option, selected) {
+  const label = document.createElement("label");
+  label.className = "placement-option";
+
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.className = "placement-checkbox";
+
+  checkbox.addEventListener("change", () => {
+    updateSelectedPlacements(
+      selected,
+      place.name,
+      option,
+      checkbox.checked
+    );
+  });
+
+  const span = document.createElement("span");
+  span.textContent = option;
+
+  label.appendChild(checkbox);
+  label.appendChild(span);
+
+  return label;
+}
+
+/* ================= WRAPPER UI ================= */
+function createPlacementWrapper(place, selected) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "placement-field";
+
+  const title = document.createElement("strong");
+  title.className = "placement-title";
+  title.textContent = place.name;
+  wrapper.appendChild(title);
+
+  place.options.forEach(option => {
+    wrapper.appendChild(
+      createPlacementOption(place, option, selected)
+    );
+  });
+
+  return wrapper;
+}
+
+/* ================= PLACEMENTS ================= */
+function renderPlacements(placements) {
   logoSelectors.innerHTML = "";
+  logoSelectors.classList.add("logo-selectors");
 
   const selected = {};
 
+  placements.forEach(place => {
+    logoSelectors.appendChild(
+      createPlacementWrapper(place, selected)
+    );
+  });
+}
+
+/* ================= MAIN ================= */
+function renderBreakdownAndPlacements(
+  product,
+  mode = "breakdown",
+  fullDesignImage = null
+) {
+  if (!shouldRenderBreakdown(product, mode)) return;
+
+  showBreakdownFlow();
+  renderBreakdownImage(product, mode, fullDesignImage);
+
   if (!product.breakdown?.placements) return;
-
-  product.breakdown.placements.forEach(place => {
-    /* ================= WRAPPER ================= */
-    const wrapper = document.createElement("div");
-    wrapper.className = "placement-field";
-
-    /* ================= TITLE ================= */
-    const title = document.createElement("strong");
-    title.className = "placement-title";
-    title.textContent = place.name;
-    wrapper.appendChild(title);
-
-    /* ================= OPTION ================= */
-    place.options.forEach(option => {
-      const label = document.createElement("label");
-      label.className = "placement-option";
-
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.className = "placement-checkbox";
-
-    checkbox.addEventListener("change", () => {
-      if (!selected[place.name]) {
-        selected[place.name] = [];
-      }
-
-      if (checkbox.checked) {
-        if (!selected[place.name].includes(option)) {
-          selected[place.name].push(option);
-        }
-      } else {
-        const idx = selected[place.name].indexOf(option);
-        if (idx !== -1) selected[place.name].splice(idx, 1);
-
-        if (selected[place.name].length === 0) {
-          delete selected[place.name];
-        }
-      }
-
-      const formatted = Object.entries(selected)
-        .map(([name, options]) => `• ${name}: ${options.join(", ")}`)
-        .join("<br>");
-
-      setElementorField("selectedPlacements", formatted);
-      toggleLogoUploadVisibility();
-    });
-
-    const span = document.createElement("span");
-    span.textContent = option;
-
-    label.appendChild(checkbox);
-    label.appendChild(span);
-    wrapper.appendChild(label);
-  });
-
-
-    logoSelectors.appendChild(wrapper);
-  });
+  renderPlacements(product.breakdown.placements);
 }
 
 /* =========================================================
@@ -1090,11 +1165,7 @@ function toggleLogoUploadVisibility() {
     'input[type="checkbox"]:checked'
   );
 
-  if (anyChecked) {
-    logoUploadField.classList.remove("hidden");
-  } else {
-    logoUploadField.classList.add("hidden");
-  }
+  logoUploadField.classList.toggle("hidden", !anyChecked);
 }
 
 /* =========================================================
@@ -1120,11 +1191,9 @@ function selectSingle(selector, container, el) {
 
 function initLogoUploadField() {
   const input = document.getElementById("form-field-uploadedFile");
-
   if (!input) return;
 
   const field = input.closest(".elementor-field-type-upload");
-
   if (!field) return;
 
   logoUploadField = field;
@@ -1132,8 +1201,7 @@ function initLogoUploadField() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  setTimeout(() => {
-    initLogoUploadField();
-  }, 300);
+  setTimeout(initLogoUploadField, 300);
 });
+
 </script>
