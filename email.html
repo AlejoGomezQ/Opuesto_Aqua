@@ -83,7 +83,6 @@
             margin-top: 10px;
         }
 
-        /* Esta clase permite que los saltos de línea (\n) se vean como lista */
         .placements-list {
             white-space: pre-line;
             font-size: 14px;
@@ -92,6 +91,41 @@
             background: #f9f9f9;
             padding: 10px;
             border-radius: 6px;
+        }
+
+        .size-detail-table {
+            border-collapse: collapse;
+            margin-top: 10px;
+            text-align: center;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        .size-cell {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .product-size-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .product-size-header {
+            text-align: left;
+            font-size: 12px;
+            color: #666;
+            padding: 6px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .product-size-table tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        .product-size-table tbody tr:nth-child(even) {
+            background-color: #000;
+            color: #fff;
         }
     </style>
 </head>
@@ -121,104 +155,25 @@
                         <div class="placements-list">[field id="selectedPlacements"]</div>
                     </div>
                     <div class="field">
-                        <span class="label">Products detail:</span>
-                        <table style="width:100%; border-collapse:collapse; margin-top:10px;">
-                            <thead>
-                                <tr>
-                                    <th
-                                        style="text-align:left; font-size:12px; color:#666; padding:6px 0; border-bottom:1px solid #eee;">
-                                        Product Name
-                                    </th>
-                                    <th
-                                        style="text-align:left; font-size:12px; color:#666; padding:6px 0; border-bottom:1px solid #eee;">
-                                        Size
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>[field id="name_1"]</td>
-                                    <td>[field id="size_1"]</td>
-                                </tr>
-                                <tr>
-                                    <td>[field id="name_2"]</td>
-                                    <td>[field id="size_2"]</td>
-                                </tr>
-                                <tr>
-                                    <td>[field id="name_3"]</td>
-                                    <td>[field id="size_3"]</td>
-                                </tr>
-                                <tr>
-                                    <td>[field id="name_4"]</td>
-                                    <td>[field id="size_4"]</td>
-                                </tr>
-                                <tr>
-                                    <td>[field id="name_5"]</td>
-                                    <td>[field id="size_5"]</td>
-                                </tr>
-                                <tr>
-                                    <td>[field id="name_6"]</td>
-                                    <td>[field id="size_6"]</td>
-                                </tr>
-                                <tr>
-                                    <td>[field id="name_7"]</td>
-                                    <td>[field id="size_7"]</td>
-                                </tr>
-                                <tr>
-                                    <td>[field id="name_8"]</td>
-                                    <td>[field id="size_8"]</td>
-                                </tr>
-                                <tr>
-                                    <td>[field id="name_9"]</td>
-                                    <td>[field id="size_9"]</td>
-                                </tr>
-                                <tr>
-                                    <td>[field id="name_10"]</td>
-                                    <td>[field id="size_10"]</td>
-                                </tr>
-                                <tr>
-                                    <td>[field id="name_11"]</td>
-                                    <td>[field id="size_11"]</td>
-                                </tr>
-                                <tr>
-                                    <td>[field id="name_12"]</td>
-                                    <td>[field id="size_12"]</td>
-                                </tr>
-                                <tr>
-                                    <td>[field id="name_13"]</td>
-                                    <td>[field id="size_13"]</td>
-                                </tr>
-                                <tr>
-                                    <td>[field id="name_14"]</td>
-                                    <td>[field id="size_14"]</td>
-                                </tr>
-                                <tr>
-                                    <td>[field id="name_15"]</td>
-                                    <td>[field id="size_15"]</td>
-                                </tr>
-                                <tr>
-                                    <td>[field id="name_16"]</td>
-                                    <td>[field id="size_16"]</td>
-                                </tr>
-                                <tr>
-                                    <td>[field id="name_17"]</td>
-                                    <td>[field id="size_17"]</td>
-                                </tr>
-                                <tr>
-                                    <td>[field id="name_18"]</td>
-                                    <td>[field id="size_18"]</td>
-                                </tr>
-                                <tr>
-                                    <td>[field id="name_19"]</td>
-                                    <td>[field id="size_19"]</td>
-                                </tr>
-                                <tr>
-                                    <td>[field id="name_20"]</td>
-                                    <td>[field id="size_20"]</td>
-                                </tr>
-                            </tbody>
+                        <span class="label">Size detail:</span>
+                        <table class="size-detail-table" width="100%" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <th class="size-cell">XS</th>
+                                <th class="size-cell">S</th>
+                                <th class="size-cell">M</th>
+                                <th class="size-cell">L</th>
+                                <th class="size-cell">XL</th>
+                                <th class="size-cell">XXL</th>
+                            </tr>
+                            <tr>
+                                <td class="size-cell">[field id="total_size_xs"]</td>
+                                <td class="size-cell">[field id="total_size_s"]</td>
+                                <td class="size-cell">[field id="total_size_m"]</td>
+                                <td class="size-cell">[field id="total_size_l"]</td>
+                                <td class="size-cell">[field id="total_size_xl"]</td>
+                                <td class="size-cell">[field id="total_size_xxl"]</td>
+                            </tr>
                         </table>
-
                     </div>
                 </td>
                 <td class="image-col">
@@ -226,6 +181,96 @@
                     <img src='[field id="selectedDesignImage"]' alt='[field id="selectedDesign"]' class="preview-img">
                 </td>
             </tr>
+        </table>
+        <table class="product-size-table">
+            <thead>
+                <tr>
+                    <th class="product-size-header">Product Name</th>
+                    <th class="product-size-header">Size</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>[field id="name_1"]</td>
+                    <td>[field id="size_1"]</td>
+                </tr>
+                <tr>
+                    <td>[field id="name_2"]</td>
+                    <td>[field id="size_2"]</td>
+                </tr>
+                <tr>
+                    <td>[field id="name_3"]</td>
+                    <td>[field id="size_3"]</td>
+                </tr>
+                <tr>
+                    <td>[field id="name_4"]</td>
+                    <td>[field id="size_4"]</td>
+                </tr>
+                <tr>
+                    <td>[field id="name_5"]</td>
+                    <td>[field id="size_5"]</td>
+                </tr>
+                <tr>
+                    <td>[field id="name_6"]</td>
+                    <td>[field id="size_6"]</td>
+                </tr>
+                <tr>
+                    <td>[field id="name_7"]</td>
+                    <td>[field id="size_7"]</td>
+                </tr>
+                <tr>
+                    <td>[field id="name_8"]</td>
+                    <td>[field id="size_8"]</td>
+                </tr>
+                <tr>
+                    <td>[field id="name_9"]</td>
+                    <td>[field id="size_9"]</td>
+                </tr>
+                <tr>
+                    <td>[field id="name_10"]</td>
+                    <td>[field id="size_10"]</td>
+                </tr>
+                <tr>
+                    <td>[field id="name_11"]</td>
+                    <td>[field id="size_11"]</td>
+                </tr>
+                <tr>
+                    <td>[field id="name_12"]</td>
+                    <td>[field id="size_12"]</td>
+                </tr>
+                <tr>
+                    <td>[field id="name_13"]</td>
+                    <td>[field id="size_13"]</td>
+                </tr>
+                <tr>
+                    <td>[field id="name_14"]</td>
+                    <td>[field id="size_14"]</td>
+                </tr>
+                <tr>
+                    <td>[field id="name_15"]</td>
+                    <td>[field id="size_15"]</td>
+                </tr>
+                <tr>
+                    <td>[field id="name_16"]</td>
+                    <td>[field id="size_16"]</td>
+                </tr>
+                <tr>
+                    <td>[field id="name_17"]</td>
+                    <td>[field id="size_17"]</td>
+                </tr>
+                <tr>
+                    <td>[field id="name_18"]</td>
+                    <td>[field id="size_18"]</td>
+                </tr>
+                <tr>
+                    <td>[field id="name_19"]</td>
+                    <td>[field id="size_19"]</td>
+                </tr>
+                <tr>
+                    <td>[field id="name_20"]</td>
+                    <td>[field id="size_20"]</td>
+                </tr>
+            </tbody>
         </table>
     </div>
     </div>

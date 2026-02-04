@@ -184,6 +184,49 @@ function createSizeField(index) {
   return select;
 }
 
+/* ================= TOTAL SIZE ================= */
+function updateSizesTotals() {
+  const sizeCounters = {
+    XS: 0,
+    S: 0,
+    M: 0,
+    L: 0,
+    XL: 0,
+    XXL: 0,
+  };
+
+  for (let i = 1; i <= MAX_PRODUCTS; i++) {
+    const sizeInput = document.querySelector(
+      `select[name="product_size_${i}"]`
+    );
+
+    if (!sizeInput) continue;
+
+    const size = sizeInput.value;
+
+    if (size && sizeCounters.hasOwnProperty(size)) {
+      sizeCounters[size]++;
+    }
+  }
+
+  // Helper para setear hidden fields de Elementor
+  const setHidden = (id, value) => {
+    const field = document.querySelector(
+      `input[name="form_fields[${id}]"]`
+    );
+    if (field) field.value = value;
+  };
+
+
+  setHidden("total_size_xs", sizeCounters.XS);
+  setHidden("total_size_s", sizeCounters.S);
+  setHidden("total_size_m", sizeCounters.M);
+  setHidden("total_size_l", sizeCounters.L);
+  setHidden("total_size_xl", sizeCounters.XL);
+  setHidden("total_size_xxl", sizeCounters.XXL);
+}
+
+
 /* ================= SUMMARY ================= */
 function updateProductsSummary() {
   const amount = parseInt(amountInput.value, 10);
@@ -203,12 +246,13 @@ function updateProductsSummary() {
       if (sizeHidden) sizeHidden.value = "";
     }
 
+    updateSizesTotals();
     return;
   }
 
   const products = [];
 
-  for (let i = 1; i <= amount && i <= 3; i++) {
+  for (let i = 1; i <= amount && i <= MAX_PRODUCTS; i++) {
     const nameInput = document.querySelector(
       `input[name="product_name_${i}"]`
     );
@@ -235,6 +279,8 @@ function updateProductsSummary() {
   }
 
   productsSummaryField.value = JSON.stringify(products);
+
+  updateSizesTotals();
 }
 
 /* ================= INIT ================= */
