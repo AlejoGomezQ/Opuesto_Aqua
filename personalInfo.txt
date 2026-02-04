@@ -75,6 +75,13 @@ const AVAILABLE_SIZES = ["XS", "S", "M", "L", "XL", "XXL"];
 const amountInput = document.getElementById("amountProducts");
 const namesContainer = document.getElementById("namesContainer");
 const productsSummaryField = document.getElementById("productsSummary");
+let productsTableHtmlField = null;
+
+function initProductsTableField() {
+  productsTableHtmlField = document.querySelector(
+    'input[name="form_fields[productsTableHtml]"]'
+  );
+}
 
 /* ================= STATE ================= */
 let uploadedNamesFileField = null;
@@ -183,12 +190,25 @@ function updateProductsSummary() {
 
   if (isNaN(amount) || amount < 1 || amount > MAX_PRODUCTS) {
     productsSummaryField.value = "";
+
+    for (let i = 1; i <= MAX_PRODUCTS; i++) {
+      const nameHidden = document.querySelector(
+        `input[name="form_fields[name_${i}]"]`
+      );
+      const sizeHidden = document.querySelector(
+        `input[name="form_fields[size_${i}]"]`
+      );
+
+      if (nameHidden) nameHidden.value = "";
+      if (sizeHidden) sizeHidden.value = "";
+    }
+
     return;
   }
 
   const products = [];
 
-  for (let i = 1; i <= amount; i++) {
+  for (let i = 1; i <= amount && i <= 3; i++) {
     const nameInput = document.querySelector(
       `input[name="product_name_${i}"]`
     );
@@ -196,12 +216,22 @@ function updateProductsSummary() {
       `select[name="product_size_${i}"]`
     );
 
-    if (!nameInput || !sizeSelect) continue;
+    const nameHidden = document.querySelector(
+      `input[name="form_fields[name_${i}]"]`
+    );
+    const sizeHidden = document.querySelector(
+      `input[name="form_fields[size_${i}]"]`
+    );
 
-    products.push({
-      name: nameInput.value || "",
-      size: sizeSelect.value || "",
-    });
+    const name = nameInput?.value || "";
+    const size = sizeSelect?.value || "";
+
+    // Guarda para summary (tu lógica original)
+    products.push({ name, size });
+
+    // Guarda en Elementor hidden
+    if (nameHidden) nameHidden.value = name;
+    if (sizeHidden) sizeHidden.value = size;
   }
 
   productsSummaryField.value = JSON.stringify(products);
@@ -209,7 +239,10 @@ function updateProductsSummary() {
 
 /* ================= INIT ================= */
 document.addEventListener("DOMContentLoaded", () => {
-  setTimeout(initUploadedNamesFileField, 300);
+  setTimeout(() => {
+    initUploadedNamesFileField();
+    initProductsTableField();
+  }, 300);
 });
 </script>
 
