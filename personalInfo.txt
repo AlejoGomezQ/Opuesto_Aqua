@@ -6,30 +6,79 @@
   --op-light: #F5F5F7;
 }
 
-/* ===== LABEL ===== */
+/* ================= LABEL ================= */
 .label-title {
-  display: block;
-  margin: 8px 0 8px;
-  font-weight: 600;
+  display: inline-block;
+  margin: 32px 0 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--op-black);
+  position: relative;
 }
 
-/* ===== INPUT ===== */
+.label-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 24px;
+  height: 3px;
+  background: var(--op-blue);
+}
+
+/* ================= INPUT & SELECT ================= */
 .op-input,
 .op-select {
   width: 100%;
-  padding: 14px 16px;
-  border-radius: 14px;
-  border: 2px solid var(--op-black);
-  font-size: 15px;
-  font-weight: 600;
+  padding: 16px 20px;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 0 !important; 
+  border: 3px solid var(--op-darkBlue) !important;
+  background: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--op-darkBlue);
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 4px 4px 0px var(--op-blue) !important;
+  min-height: 48px;
 }
 
-/* ===== GRID ===== */
+/* Flecha personalizada para el select sin necesidad de wrapper */
+.op-select {
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23050E35" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  cursor: pointer;
+}
+
+.op-input:focus,
+.op-input:hover,
+.op-select:focus,
+.op-select:hover {
+  transform: translate(-2px, -2px) !important;
+  box-shadow: 6px 6px 0px var(--op-blue) !important;
+}
+
+/* Ocultar las flechas nativas (spinners) del input tipo número */
+.op-input[type="number"] {
+  -moz-appearance: textfield; /* Para Firefox */
+}
+.op-input[type="number"]::-webkit-outer-spin-button,
+.op-input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* ================= GRID ================= */
 .namesGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px 20px;
-  margin-top: 16px;
+  gap: 24px;
+  margin-top: 24px;
 }
 
 /* ===== ROW ===== */
@@ -38,7 +87,7 @@
 }
 
 .hidden {
-  display: none !important;
+  display: none;
 }
 
 /* ===== RESPONSIVE ===== */
@@ -69,7 +118,10 @@
 <script>
 /* ================= CONFIG ================= */
 const MAX_PRODUCTS = 20;
-const AVAILABLE_SIZES = ["XS", "S", "M", "L", "XL", "XXL"];
+const AVAILABLE_SIZES = [
+  { group: "Child/Youth", sizes: ["4", "6", "YXS", "YS", "YM", "YL"] },
+  { group: "Adult", sizes: ["XS", "S", "M", "L", "XL", "XXL", "XXXL"] }
+];
 
 /* ================= DOM ================= */
 const amountInput = document.getElementById("amountProducts");
@@ -172,11 +224,16 @@ function createSizeField(index) {
 
   select.appendChild(placeholder);
 
-  AVAILABLE_SIZES.forEach(size => {
-    const option = document.createElement("option");
-    option.value = size;
-    option.textContent = size;
-    select.appendChild(option);
+  AVAILABLE_SIZES.forEach(category => {
+    const optgroup = document.createElement("optgroup");
+    optgroup.label = category.group;
+    category.sizes.forEach(size => {
+      const option = document.createElement("option");
+      option.value = size;
+      option.textContent = size;
+      optgroup.appendChild(option);
+    });
+    select.appendChild(optgroup);
   });
 
   select.addEventListener("change", updateProductsSummary);
@@ -187,12 +244,8 @@ function createSizeField(index) {
 /* ================= TOTAL SIZE ================= */
 function updateSizesTotals() {
   const sizeCounters = {
-    XS: 0,
-    S: 0,
-    M: 0,
-    L: 0,
-    XL: 0,
-    XXL: 0,
+    "4": 0, "6": 0, "YXS": 0, "YS": 0, "YM": 0, "YL": 0,
+    "XS": 0, "S": 0, "M": 0, "L": 0, "XL": 0, "XXL": 0, "XXXL": 0
   };
 
   for (let i = 1; i <= MAX_PRODUCTS; i++) {
@@ -217,13 +270,9 @@ function updateSizesTotals() {
     if (field) field.value = value;
   };
 
-
-  setHidden("total_size_xs", sizeCounters.XS);
-  setHidden("total_size_s", sizeCounters.S);
-  setHidden("total_size_m", sizeCounters.M);
-  setHidden("total_size_l", sizeCounters.L);
-  setHidden("total_size_xl", sizeCounters.XL);
-  setHidden("total_size_xxl", sizeCounters.XXL);
+  Object.entries(sizeCounters).forEach(([size, count]) => {
+    setHidden(`total_size_${size.toLowerCase()}`, count);
+  });
 }
 
 
