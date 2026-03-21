@@ -1256,6 +1256,11 @@ categorySelect.addEventListener("change", e => {
 
   const products = catalog.categories[e.target.value] || [];
 
+  // Emit reset event
+  window.dispatchEvent(new CustomEvent('opuesto:productChanged', { 
+    detail: { product: null, category: e.target.value } 
+  }));
+
   products.forEach(product => {
     productCardContainer.appendChild(
       createCard(product, el => selectProduct(product, el))
@@ -1322,6 +1327,14 @@ function selectProduct(product, el) {
   resetAfterProductChange();
   renderFeatures(product);
   renderDesigns(product);
+
+  // Emit selection event
+  window.dispatchEvent(new CustomEvent('opuesto:productChanged', { 
+    detail: { 
+      product: product, 
+      category: categorySelect.value 
+    } 
+  }));
 }
 
 /* =========================================================

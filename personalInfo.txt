@@ -99,7 +99,7 @@
 </style>
 
 <!-- ===== AMOUNT ===== -->
-<label class="label-title">Amount of products</label>
+<label class="label-title">List of names</label>
 <input
   id="amountProducts"
   type="number"
@@ -118,10 +118,20 @@
 <script>
 /* ================= CONFIG ================= */
 const MAX_PRODUCTS = 20;
-const AVAILABLE_SIZES = [
-  { group: "Child/Youth", sizes: ["4", "6", "YXS", "YS", "YM", "YL"] },
-  { group: "Adult", sizes: ["XS", "S", "M", "L", "XL", "XXL", "XXXL"] }
-];
+let currentProductInfo = { product: null, category: null };
+
+const SIZE_CHARTS = {
+  default: [
+    { group: "Child/Youth", sizes: ["Y4", "Y6", "YXS", "YS", "YM", "YL"], prefix: "" },
+    { group: "Adult", sizes: ["XS", "S", "M", "L", "XL", "XXL", "XXXL"], prefix: "" }
+  ],
+  slides: [
+    { group: "Child", sizes: ["11", "12", "13", "1", "2", "3", "4"], prefix: "c" },
+    { group: "Women", sizes: ["5", "6", "7", "8", "9", "10", "11"], prefix: "w" },
+    { group: "Men", sizes: ["6", "7", "8", "9", "10", "11", "12"], prefix: "m" }
+  ],
+  none: []
+};
 
 /* ================= DOM ================= */
 const amountInput = document.getElementById("amountProducts");
@@ -186,13 +196,42 @@ amountInput.addEventListener("input", () => {
   renderProductFields(amount);
 });
 
+/* ================= SYNC ================= */
+window.addEventListener('opuesto:productChanged', (e) => {
+  currentProductInfo = e.detail;
+  
+  // Re-render if we already have an amount
+  const amount = parseInt(amountInput.value, 10);
+  if (!isNaN(amount) && amount > 0 && amount <= MAX_PRODUCTS) {
+    renderProductFields(amount);
+  }
+});
+
 /* ================= RENDER ================= */
+function getActiveSizeChart() {
+  const { product, category } = currentProductInfo;
+  
+  if (category === 'accessories') {
+    if (product?.id === 'SLD') return SIZE_CHARTS.slides;
+    if (product?.id === 'THS' || product?.id === 'BCK') return SIZE_CHARTS.none;
+  }
+  
+  return SIZE_CHARTS.default;
+}
+
 function renderProductFields(amount) {
   namesContainer.innerHTML = "";
+  const activeSizes = getActiveSizeChart();
+  const isAnonymous = currentProductInfo.product?.id === 'THS' || currentProductInfo.product?.id === 'BCK';
 
-  for (let i = 1; i <= amount; i++) {
-    namesContainer.appendChild(createNameField(i));
-    namesContainer.appendChild(createSizeField(i));
+  if (!isAnonymous) {
+    for (let i = 1; i <= amount; i++) {
+      namesContainer.appendChild(createNameField(i));
+      
+      if (activeSizes.length > 0) {
+        namesContainer.appendChild(createSizeField(i, activeSizes));
+      }
+    }
   }
 
   updateProductsSummary();
@@ -211,7 +250,7 @@ function createNameField(index) {
   return input;
 }
 
-function createSizeField(index) {
+function createSizeField(index, activeSizes) {
   const select = document.createElement("select");
   select.className = "op-select";
   select.name = `product_size_${index}`;
@@ -224,13 +263,13 @@ function createSizeField(index) {
 
   select.appendChild(placeholder);
 
-  AVAILABLE_SIZES.forEach(category => {
+  activeSizes.forEach(category => {
     const optgroup = document.createElement("optgroup");
     optgroup.label = category.group;
     category.sizes.forEach(size => {
       const option = document.createElement("option");
-      option.value = size;
-      option.textContent = size;
+      option.value = (category.prefix + size).toLowerCase();
+      option.textContent = size.replace(/^Y(4|6)$/, "$1");
       optgroup.appendChild(option);
     });
     select.appendChild(optgroup);
@@ -243,10 +282,17 @@ function createSizeField(index) {
 
 /* ================= TOTAL SIZE ================= */
 function updateSizesTotals() {
-  const sizeCounters = {
-    "4": 0, "6": 0, "YXS": 0, "YS": 0, "YM": 0, "YL": 0,
-    "XS": 0, "S": 0, "M": 0, "L": 0, "XL": 0, "XXL": 0, "XXXL": 0
-  };
+  const sizeCounters = {};
+
+  // Initialize all possible counters dynamically from SIZE_CHARTS
+  Object.values(SIZE_CHARTS).forEach(chart => {
+    chart.forEach(group => {
+      group.sizes.forEach(size => {
+        const key = (group.prefix + size).toLowerCase();
+        sizeCounters[key] = 0;
+      });
+    });
+  });
 
   for (let i = 1; i <= MAX_PRODUCTS; i++) {
     const sizeInput = document.querySelector(
@@ -255,23 +301,23 @@ function updateSizesTotals() {
 
     if (!sizeInput) continue;
 
-    const size = sizeInput.value;
+    const sizeKey = sizeInput.value; // Store already has the prefix from createSizeField
 
-    if (size && sizeCounters.hasOwnProperty(size)) {
-      sizeCounters[size]++;
+    if (sizeKey && sizeCounters.hasOwnProperty(sizeKey)) {
+      sizeCounters[sizeKey]++;
     }
   }
 
   // Helper para setear hidden fields de Elementor
   const setHidden = (id, value) => {
     const field = document.querySelector(
-      `input[name="form_fields[${id}]"]`
+      `input[name="form_fields[total_size_${id}]"]`
     );
     if (field) field.value = value;
   };
 
-  Object.entries(sizeCounters).forEach(([size, count]) => {
-    setHidden(`total_size_${size.toLowerCase()}`, count);
+  Object.entries(sizeCounters).forEach(([key, count]) => {
+    setHidden(key, count);
   });
 }
 
@@ -337,6 +383,16 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(() => {
     initUploadedNamesFileField();
     initProductsTableField();
+
+    // Check for initial product selection (if already set in hidden field)
+    const productField = document.querySelector('input[name="form_fields[selectedProduct]"]') || document.getElementById('selectedProduct');
+    const categorySelect = document.getElementById('categorySelect');
+    
+    if (productField && productField.value) {
+      // Small delay to ensure catalog is ready in the other component if needed
+      // but here we just need to know it's NOT empty to potentially trigger a fetch
+      // or we can just rely on the event since they are on the same page.
+    }
   }, 300);
 });
 </script>
