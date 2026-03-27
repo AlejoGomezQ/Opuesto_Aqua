@@ -24,8 +24,9 @@
   left: 0;
   bottom: -4px;
   width: 24px;
-  height: 3px;
+  height: 4px;
   background: var(--op-aqua);
+  border-radius: 4px;
 }
 
 /* ================= SELECT ================= */
@@ -36,8 +37,8 @@
 .select-wrapper select {
   width: 100%;
   padding: 18px 50px 18px 24px;
-  border-radius: 0; /* Sharp edges for daring look */
-  border: 3px solid var(--op-deep); /* Thick strong border */
+  border-radius: 12px; /* Subtle rounded corners */
+  border: 2px solid var(--op-deep); /* Thinner border for elegance */
   background: #fff;
   font-size: 15px;
   font-weight: 500;
@@ -45,15 +46,15 @@
   color: var(--op-deep);
   appearance: none;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  box-shadow: 4px 4px 0px var(--op-aqua); /* Hard offset shadow */
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(81, 156, 171, 0.15); /* Soft fluid shadow */
 }
 
 .select-wrapper select:focus,
 .select-wrapper select:hover {
   outline: none;
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0px var(--op-aqua);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(81, 156, 171, 0.25);
 }
 
 .select-wrapper::after {
@@ -82,11 +83,11 @@
 .product-card {
   background: #fff;
   border: 2px solid #e0e0e0;
-  border-radius: 0;
+  border-radius: 16px; /* Subtle rounded corners */
   padding: 24px 16px;
   text-align: center;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
 }
 
@@ -95,20 +96,21 @@
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   border: 3px solid transparent;
+  border-radius: 16px;
   pointer-events: none;
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
 }
 
 .product-card:hover {
-  transform: translate(-4px, -4px);
-  border-color: var(--op-ink);
-  box-shadow: 6px 6px 0px var(--op-aqua);
+  transform: translateY(-4px);
+  border-color: var(--op-aqua);
+  box-shadow: 0 10px 25px rgba(81, 156, 171, 0.2);
 }
 
 .product-card.selected {
   border-color: var(--op-deep);
-  transform: translate(-4px, -4px);
-  box-shadow: 6px 6px 0px var(--op-deep);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(5, 14, 53, 0.15);
 }
 .product-card.selected::before {
   border-color: var(--op-deep);
@@ -147,28 +149,29 @@
 .color-swatch {
   width: 44px;
   height: 44px;
-  border-radius: 0; /* Square swatches for structured layout */
+  border-radius: 12px; /* Soft squircle swatches */
   cursor: pointer;
   border: 2px solid #e0e0e0;
   position: relative;
-  transition: all 0.2s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .color-swatch:hover {
-  transform: translateY(-4px);
-  box-shadow: 4px 4px 0px var(--op-aqua);
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 6px 15px rgba(81, 156, 171, 0.3);
 }
 
 .color-swatch.selected {
   border-color: var(--op-deep);
   transform: translateY(-4px);
-  box-shadow: 4px 4px 0px var(--op-deep);
+  box-shadow: 0 6px 15px rgba(5, 14, 53, 0.25);
 }
 .color-swatch.selected::after {
   content: '';
   position: absolute;
   top: -6px; left: -6px; right: -6px; bottom: -6px;
   border: 2px solid var(--op-deep);
+  border-radius: 12px;
 }
 
 @media (max-width: 480px) {
@@ -179,16 +182,17 @@
 .product-badge {
   display: inline-flex;
   align-items: center;
-  padding: 6px 14px;
+  padding: 4px 10px; /* Reduced padding */
   margin-left: 12px;
-  font-size: 11px;
+  font-size: 10px; /* Slightly smaller text */
   font-weight: 800;
   letter-spacing: 1.5px;
-  color: #fff;
-  background: var(--op-deep);
+  color: var(--op-deep); /* Dark text for contrast */
+  background: var(--op-aqua); /* Lighter background */
   position: relative;
   white-space: nowrap;
-  box-shadow: 3px 3px 0px var(--op-aqua);
+  border-radius: 8px; /* Less pill-shaped */
+  box-shadow: 0 4px 10px rgba(81, 156, 171, 0.2);
 }
 
 .product-badge.is-visible {
@@ -216,6 +220,7 @@
   color: #ffffff; /* Explicit white color for readablity */
   background: var(--op-deep); /* Inverse dark background */
   border-left: 6px solid var(--op-aqua);
+  border-radius: 0 12px 12px 0;
   position: relative;
 }
 
@@ -225,13 +230,14 @@
   background: #fff;
   padding: 16px 20px;
   border: 2px solid #e0e0e0;
-  transition: all 0.3s ease;
+  border-radius: 12px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .placement-field:hover {
-  border-color: var(--op-ink);
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0px var(--op-paper);
+  border-color: var(--op-aqua);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(81, 156, 171, 0.1);
 }
 
 .placement-title {
@@ -264,6 +270,7 @@
   cursor: pointer;
   appearance: none;
   border: 2px solid var(--op-ink);
+  border-radius: 6px; /* Squircle checkbox */
   background: #fff;
   display: grid;
   place-content: center;
@@ -273,6 +280,7 @@
   content: "";
   width: 10px;
   height: 10px;
+  border-radius: 4px;
   background-color: var(--op-aqua);
   transform: scale(0);
   transition: 120ms transform ease-in-out;
@@ -299,13 +307,14 @@
   margin-top: 40px;
   margin-bottom: 20px;
   position: relative;
-  /* Edgy offset shadow using the vibrant aqua */
-  box-shadow: 12px 12px 0px var(--op-aqua);
+  /* Fluid curved borders and soft shadow */
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(81, 156, 171, 0.25);
   border: 2px solid var(--op-deep); 
   
   /* Entrance animation */
   opacity: 0;
-  animation: revealBox 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  animation: revealBox 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
 
 @keyframes revealBox {
@@ -371,6 +380,7 @@
   top: 8px;
   width: 10px;
   height: 10px;
+  border-radius: 50%;
   background: var(--op-aqua);
 }
 

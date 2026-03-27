@@ -32,17 +32,17 @@
 .op-input,
 .op-select {
   width: 100%;
-  padding: 16px 20px;
+  padding: 16px 24px;
   font-family: 'Poppins', sans-serif;
-  border-radius: 0 !important; 
-  border: 3px solid var(--op-darkBlue) !important;
+  border-radius: 12px !important; /* Subtle rounded corners */
+  border: 2px solid var(--op-darkBlue) !important; /* Refined border */
   background: #ffffff;
   font-size: 14px;
   font-weight: 500;
   color: var(--op-darkBlue);
   outline: none;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  box-shadow: 4px 4px 0px var(--op-blue) !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(81, 156, 171, 0.15) !important; /* Soft fluid shadow */
   min-height: 48px;
 }
 
@@ -59,8 +59,8 @@
 .op-input:hover,
 .op-select:focus,
 .op-select:hover {
-  transform: translate(-2px, -2px) !important;
-  box-shadow: 6px 6px 0px var(--op-blue) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 20px rgba(81, 156, 171, 0.25) !important;
 }
 
 /* Ocultar las flechas nativas (spinners) del input tipo número */
