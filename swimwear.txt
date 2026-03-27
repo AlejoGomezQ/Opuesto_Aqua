@@ -1,0 +1,1435 @@
+<style>
+/* ================= BRAND PALETTE ================= */
+:root {
+  --op-deep: #050E35; /* Deep underwater navy */
+  --op-aqua: #519CAB; /* Vibrant aqua accent */
+  --op-ink: #111111;   /* Black text */
+  --op-paper: #F5F5F7; /* Light background */
+}
+
+/* ================= LABEL ================= */
+.label-title {
+  display: inline-block;
+  margin: 32px 0 12px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--op-ink);
+  position: relative;
+}
+
+.label-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 24px;
+  height: 4px;
+  background: var(--op-aqua);
+  border-radius: 4px;
+}
+
+/* ================= SELECT ================= */
+.select-wrapper {
+  position: relative;
+}
+
+.select-wrapper select {
+  width: 100%;
+  padding: 18px 50px 18px 24px;
+  border-radius: 12px; /* Subtle rounded corners */
+  border: 2px solid var(--op-deep); /* Thinner border for elegance */
+  background: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: var(--op-deep);
+  appearance: none;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(81, 156, 171, 0.15); /* Soft fluid shadow */
+}
+
+.select-wrapper select:focus,
+.select-wrapper select:hover {
+  outline: none;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(81, 156, 171, 0.25);
+}
+
+.select-wrapper::after {
+  content: "";
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0; 
+  height: 0; 
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid var(--op-deep);
+  pointer-events: none;
+}
+
+/* ================= GRID ================= */
+.product-card-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 24px;
+}
+
+/* ================= CARD ================= */
+.product-card {
+  background: #fff;
+  border: 2px solid #e0e0e0;
+  border-radius: 16px; /* Subtle rounded corners */
+  padding: 24px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border: 3px solid transparent;
+  border-radius: 16px;
+  pointer-events: none;
+  transition: all 0.4s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--op-aqua);
+  box-shadow: 0 10px 25px rgba(81, 156, 171, 0.2);
+}
+
+.product-card.selected {
+  border-color: var(--op-deep);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(5, 14, 53, 0.15);
+}
+.product-card.selected::before {
+  border-color: var(--op-deep);
+}
+
+.product-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: contain;
+  margin-bottom: 20px;
+  transform: scale(0.95);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.product-card:hover img,
+.product-card.selected img {
+  transform: scale(1.05); /* Slight zoom on hover/select */
+}
+
+.product-card-name {
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  color: var(--op-ink);
+}
+
+/* ================= COLOR SELECTOR ================= */
+.color-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 16px;
+  padding: 8px 0;
+}
+
+.color-swatch {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px; /* Soft squircle swatches */
+  cursor: pointer;
+  border: 2px solid #e0e0e0;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.color-swatch:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 6px 15px rgba(81, 156, 171, 0.3);
+}
+
+.color-swatch.selected {
+  border-color: var(--op-deep);
+  transform: translateY(-4px);
+  box-shadow: 0 6px 15px rgba(5, 14, 53, 0.25);
+}
+.color-swatch.selected::after {
+  content: '';
+  position: absolute;
+  top: -6px; left: -6px; right: -6px; bottom: -6px;
+  border: 2px solid var(--op-deep);
+  border-radius: 12px;
+}
+
+@media (max-width: 480px) {
+  .color-swatch { width: 36px; height: 36px; }
+}
+
+/* ================= BADGE PRODUCT SELECTED ================= */
+.product-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px; /* Reduced padding */
+  margin-left: 12px;
+  font-size: 10px; /* Slightly smaller text */
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--op-deep); /* Dark text for contrast */
+  background: var(--op-aqua); /* Lighter background */
+  position: relative;
+  white-space: nowrap;
+  border-radius: 8px; /* Less pill-shaped */
+  box-shadow: 0 4px 10px rgba(81, 156, 171, 0.2);
+}
+
+.product-badge.is-visible {
+  animation: badgeSlide 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes badgeSlide {
+  0% {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ================= DISCLAIMER ================= */
+.design-disclaimer {
+  margin-top: 24px;
+  padding: 24px;
+  font-size: 13px;
+  line-height: 1.6;
+  font-weight: 500;
+  color: #ffffff; /* Explicit white color for readablity */
+  background: var(--op-deep); /* Inverse dark background */
+  border-left: 6px solid var(--op-aqua);
+  border-radius: 0 12px 12px 0;
+  position: relative;
+}
+
+/* ===== PLACEMENTS ===== */
+.placement-field {
+  margin-bottom: 20px;
+  background: #fff;
+  padding: 16px 20px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.placement-field:hover {
+  border-color: var(--op-aqua);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(81, 156, 171, 0.1);
+}
+
+.placement-title {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  color: var(--op-ink);
+  border-bottom: 2px solid var(--op-ink);
+  padding-bottom: 8px;
+}
+
+.placement-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--op-ink);
+  margin-bottom: 12px;
+}
+.placement-option:last-child { margin-bottom: 0; }
+
+/* Checkbox Edgy */
+.placement-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  appearance: none;
+  border: 2px solid var(--op-ink);
+  border-radius: 6px; /* Squircle checkbox */
+  background: #fff;
+  display: grid;
+  place-content: center;
+  transition: all 0.2s ease;
+}
+.placement-checkbox::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 4px;
+  background-color: var(--op-aqua);
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+}
+.placement-checkbox:checked {
+  background-color: var(--op-deep);
+  border-color: var(--op-deep);
+}
+.placement-checkbox:checked::before {
+  transform: scale(1);
+}
+
+.logo-selectors {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px 24px;
+}
+
+/* ================= PRODUCT FEATURES (THE DARK BOX) ================= */
+.product-features-box {
+  background: var(--op-deep);
+  color: #fff;
+  padding: 40px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  position: relative;
+  /* Fluid curved borders and soft shadow */
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(81, 156, 171, 0.25);
+  border: 2px solid var(--op-deep); 
+  
+  /* Entrance animation */
+  opacity: 0;
+  animation: revealBox 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+@keyframes revealBox {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.feature-item {
+  margin-bottom: 32px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 32px;
+}
+.feature-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.feature-label {
+  display: block;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: var(--op-aqua); /* Neon contrast against deep blue */
+  margin-bottom: 12px;
+}
+
+.feature-value {
+  font-size: 15px;
+  color: rgba(255,255,255,0.85); /* Slightly muted white for readability */
+  line-height: 1.7;
+  font-weight: 400;
+  margin: 0;
+}
+
+.feature-value ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  column-gap: 32px;
+  row-gap: 12px;
+}
+
+.feature-value li {
+  position: relative;
+  padding-left: 24px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.feature-value li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--op-aqua);
+}
+
+.hidden {
+  display: none !important;
+};
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width:1024px){
+  .product-card-container { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width:600px){
+  .product-card-container { grid-template-columns: 1fr; }
+}
+</style>
+
+<!-- ================= CATEGORY ================= -->
+<label for="form-field-selectedCategory" class="label-title">Category</label>
+<div class="select-wrapper">
+  <select id="categorySelect">
+    <option value="">Select a category...</option>
+    <option value="male">Male</option>
+    <option value="female">Female</option>
+    <option value="accessories">Accessories</option>
+  </select>
+</div>
+
+<!-- ================= PRODUCTS ================= -->
+<div id="productCardContainer" class="product-card-container"></div>
+
+<!-- ================= PRODUCT FEATURES ================= -->
+<div id="productFeaturesContainer" style="display:none;" class="product-features-box"></div>
+
+<!-- ================= DESIGNS ================= -->
+<div id="designSection" style="display:none;">
+  <label for="form-field-selectedDesign" class="label-title">
+    <strong>Choose your design</strong>
+    <span id="selectedProductLabel" class="product-badge"></span>
+  </label> 
+  <div id="designCardContainer" class="product-card-container"></div>
+</div>
+
+<!-- ================= COLORS ================= -->
+<div id="colorSection" style="display:none;">
+  <label for="form-field-selectedColor" class="label-title"><strong>Choose a color</strong></label>
+  <div id="colorSelector" class="color-selector"></div>
+</div>
+
+<!-- ================= BREAKDOWN ================= -->
+<div id="breakdownSection" style="display:none;">
+  <label for="form-field-breakdown" class="label-title"><strong>Garment breakdown</strong></label>
+  <img id="breakdownImage" src="" style="width:100%; border-radius:14px; margin-top:12px;">
+  <p class="design-disclaimer">
+    Our mock-ups are intended to convey the concept and vision of your design.
+    They do not represent an accurate depiction of the finished garment as it
+    relates to design, fabric, colours, logo placement, and text placement.
+    These are solely for visual purposes.
+  </p>
+</div>
+
+<!-- ================= LOGO/TEXT PLACEMENTS ================= -->
+<div id="logoSection" style="display:none;">
+  <label for="form-field-selectedPlacements" class="label-title"><strong>Logo / Text placement</strong></label>
+  <div id="logoSelectors"></div>
+</div>
+
+<!-- ================= HIDDEN ================= -->
+<input type="hidden" id="selectedProduct" name="selectedProduct">
+<input type="hidden" id="selectedDesign" name="selectedDesign">
+<input type="hidden" id="selectedColor" name="selectedColor">
+<input type="hidden" id="selectedDesignImage" name="selectedDesignImage">
+<input type="hidden" id="selectedPlacements" name="selectedPlacements">
+
+<script>
+/* =========================================================
+   CATÁLOGO DE PRODUCTOS
+   ========================================================= */
+const catalog = {
+  categories: {
+    female: [
+      {
+        id: "XTS",
+        name: "Female cross training (XTS)",
+        image:
+          "https://opuestoaqua.com/wp-content/uploads/2026/01/4-XTS-SUB01-FRONT.png",
+        features: [
+          {
+            label: "Description",
+            value: "Experience the freedom of our lightweight, moisture-wicking shorts—the perfect choice for drying off after a swim or staying cool during your favorite outdoor adventures. Create with flexible fabric that allows for free ease of movement. Allow our brand to become part of your team's identity or customize your own look by picking your favorite shade from our extensive color chart.",
+          },
+          {
+            label: "Benefits",
+            value: [
+              "Provides a secure, stay-put fit that moves with your body.",
+              "Fresh, soft, and moisture-wicking material designed for maximum breathability.",
+              "Tailored with flexible fabric to allow a full range of motion for any sporty activity.",
+              "Designed to be effortless and comfortable to slip on and off.",
+            ],
+          },
+        ],
+        designs: [
+          {
+            id: "xts_design_1",
+            name: "XTS - Design 1",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/4-XTS-SUB01-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/03/4-XTS-SUB01.png",
+          },
+          {
+            id: "xts_design_2",
+            name: "XTS - Design 2",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/5-XTS-SUB01-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/03/5-XTS-SUB01.png",
+          },
+          {
+            id: "xts_design_3",
+            name: "XTS - Design 3",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/8-XTS-SUB01-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/03/8-XTS-SUB01.png",
+          },
+          {
+            id: "xts_design_4",
+            name: "XTS - Design 4",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/16-XTS-SUB01-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/03/16-XTS-SUB01.png",
+          },
+          {
+            id: "xts_design_5",
+            name: "XTS - Design 5",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/24-XTS-SUB01-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/03/24-XTS-SUB01.png",
+          },
+          {
+            id: "xts_design_6",
+            name: "Build your own design",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/4-XTS-SUB01-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/03/XTS-PLACEMENTS.png",
+          },
+        ],
+        breakdown: {
+          image:
+            "https://opuestoaqua.com/wp-content/uploads/2026/03/XTS-PLACEMENTS.png",
+          placements: [
+            { name: "Outside front waistband", options: ["Logo"] },
+            { name: "Outside back waistband", options: ["Logo"] },
+            { name: "Right front panel", options: ["Logo"] },
+            { name: "Left front panel", options: ["Logo"] },
+          ],
+        },
+      },
+    ],
+    male: [
+      {
+        id: "JGR",
+        name: "Jogger unisex (JGR)",
+        image:
+          "https://opuestoaqua.com/wp-content/uploads/2026/01/1-JGR-SUB01-2-FRONT.png",
+        features: [
+          {
+            label: "Description",
+            value: "Designed for performance beyond the pool, these unisex joggers are built to support athletes before, during, and after training. Their flexible, performance-driven fabric allows full freedom of movement, making them ideal for warm-ups, recovery, travel, and everyday athletic use. They feature an adjustable drawstring waistband for a secure and comfortable fit, zippered side pockets to keep essentials safe, and a tapered leg design for a modern, streamlined silhouette.",
+          },
+          {
+            label: "Benefits",
+            value: [
+              "All Sizes",
+              "No Minimums",
+              "UV Protection",
+              "Vibrant Colors",
+              "Moisture Wicking/Quick Drying",
+              "Antimicrobial Properties",
+            ],
+          },
+          {
+            label: "Fabric features",
+            value: "Polyester.",
+          },
+        ],
+        designs: [
+          {
+            id: "jgr_design_1",
+            name: "JGR - Design 1",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-JGR-SUB01-2-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/03/1B-JGR-SUB.png",
+          },
+          {
+            id: "jgr_design_2",
+            name: "JGR - Design 2",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-JGR-SUB01-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/03/1-JGR-SUB.png",
+          },
+          {
+            id: "jgr_design_3",
+            name: "JGR - Design 3",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/3-JGR-SUB01-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/03/3-JGR-SUB.png",
+          },
+          {
+            id: "jgr_design_4",
+            name: "JGR - Design 4",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/6-JGR-SUB01-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/03/6-JGR-SUB.png",
+          },
+          {
+            id: "jgr_design_5",
+            name: "JGR - Design 5",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/9-JGR-SUB01-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/03/9-JGR-SUB.png",
+          },
+          {
+            id: "jgr_design_6",
+            name: "JGR - Design 6",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/15-JGR-SUB01-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/03/15-JGR-SUB.png",
+          },
+          {
+            id: "jgr_design_7",
+            name: "Build your own design",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-JGR-SUB01-2-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/03/JGR-PLACEMENTS.png",
+          },
+        ],
+        breakdown: {
+          image: "https://opuestoaqua.com/wp-content/uploads/2026/03/JGR-PLACEMENTS.png",
+          placements: [
+            { name: "Back right", options: ["Text"] },
+            { name: "Front 1 right", options: ["Logo"] },
+            { name: "Front 2 right", options: ["Text"] },
+            { name: "Front 4 right", options: ["Text"] },
+            { name: "Front 1 left", options: ["Logo"] },
+            { name: "Front 2 left", options: ["Text"] },
+            { name: "Front 4 left", options: ["Text"] },
+            { name: "Back left", options: ["Text"] },
+          ],
+        },
+      },
+      {
+        id: "WUP",
+        name: "Warmup pant unisex (WUP)",
+        image:
+          "https://opuestoaqua.com/wp-content/uploads/2026/01/7-WUP-SUB-FRONT.png",
+        features: [
+          {
+            label: "Description",
+            value: "Designed for warm-ups, mobility, and recovery, these high-performance pants are built to move with the athlete. Created with fabric made with 63% recycled plastic water bottles, they combine durability, comfort, and a responsible approach to sustainability. A strategic knee construction enhances flexibility and allows for deep bends, lunges, and dynamic movements without restriction, making them ideal for pre-competition routines and active recovery.",
+          },
+          {
+            label: "Benefits",
+            value: [
+              "All Sizes",
+              "No Minimums",
+              "Antimicrobial Properties",
+              "Moisture Wicking",
+              "UV Protection",
+              "Quick Drying",
+              "Water resistant",
+              "Flexible knees for ultimate range of motion",
+            ],
+          },
+          {
+            label: "Fabric features",
+            value: "A high-performance polyester–spandex blend offering four-way stretch and enhanced mobility.",
+          },
+        ],
+        designs: [
+          {
+            id: "wup_design_1",
+            name: "WUP - Design 1",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/2-WUP-SUB-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/03/2-WUP-SUB.png",
+          },
+          {
+            id: "wup_design_2",
+            name: "WUP - Design 2",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/7-WUP-SUB-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/03/7-WUP-SUB7.png",
+          },
+          {
+            id: "wup_design_3",
+            name: "WUP - Design 3",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/10-WUP-SUB-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/03/10-WUP-SUB.png",
+          },
+          {
+            id: "wup_design_4",
+            name: "Build your own design",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/7-WUP-SUB-FRONT.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/03/WUP-PLACEMENTS.png",
+          },
+        ],
+        breakdown: {
+          image: "https://opuestoaqua.com/wp-content/uploads/2026/03/WUP-PLACEMENTS.png",
+          placements: [
+            { name: "Front right", options: ["Logo"] },
+            { name: "Front left", options: ["Logo"] },
+            { name: "Back right", options: ["Text"] },
+            { name: "Back left", options: ["Text"] },
+          ],
+        },
+      },
+    ],
+    accessories: [
+      {
+        id: "SLD",
+        name: "Slides (SLD)",
+        image:
+          "https://opuestoaqua.com/wp-content/uploads/2026/01/1-SLD-SUB01.png",
+        features: [
+          {
+            label: "Description",
+            value: "Designed for recovery and everyday athletic use, these performance slides offer comfort, durability, and easy wear for aquatic athletes. A 4mm neoprene-lined strap provides soft cushioning, while the durable mold-injected PVC sole delivers reliable support for post-training and on-the-go use. Built for customization and available in black or white soles, these slides are offered in youth, women's, and men's sizes.",
+          },
+          {
+            label: "Benefits",
+            value: [
+              "Custom front panel with your team's logo and colors.",
+              "No minimums.",
+            ],
+          },
+          {
+            label: "Fabric features",
+            value: "Black or white.",
+          },
+        ],
+        designs: [
+          {
+            id: "sld_design_1",
+            name: "SLD - Design 1",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-SLD-SUB01.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-SLD-SUB01.png",
+          },
+          {
+            id: "sld_design_2",
+            name: "SLD - Design 2",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-SLD-SUB01-2-NEW.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-SLD-SUB01-2-NEW.png",
+          },
+          {
+            id: "sld_design_3",
+            name: "SLD - Design 3",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/4-SLD-SUB01.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/4-SLD-SUB01.png",
+          },
+          {
+            id: "sld_design_4",
+            name: "SLD - Design 4",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/24-SLD-SUB01.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/24-SLD-SUB01.png",
+          },
+          {
+            id: "sld_design_5",
+            name: "Build your own design",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-SLD-SUB01.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-SLD-SUB01.png",
+          },
+        ],
+        breakdown: null,
+      },
+      {
+        id: "THS",
+        name: "Team hair scrunchie (THS)",
+        image:
+          "https://opuestoaqua.com/wp-content/uploads/2026/01/2-THS-SUB01.png",
+        features: [
+          {
+            label: "Description",
+            value: "Designed for active athletes, this performance scrunchie offers a secure and comfortable hold during training and competition. Its durable stretch construction keeps hair in place without discomfort, while the fully customizable repeating pattern allows teams to coordinate seamlessly with their uniforms and apparel. Lightweight and practical, it's a simple finishing touch that completes any team look.",
+          },
+          {
+            label: "Benefits",
+            value: [
+              "New athlete welcome packs",
+              "Program and club branding",
+              "Meet-day preparation",
+              "Team identity and branding",
+            ],
+          },
+          {
+            label: "Fabric features",
+            value: "Polyester/Spandex.",
+          },
+        ],
+        designs: [
+          {
+            id: "ths_design_1",
+            name: "THS - Design 1",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/2-THS-SUB01.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/2-THS-SUB01.png",
+          },
+          {
+            id: "ths_design_2",
+            name: "THS - Design 2",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/3-THS-SUB01.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/3-THS-SUB01.png",
+          },
+          {
+            id: "ths_design_3",
+            name: "THS - Design 3",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/21-THS-SUB01.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/21-THS-SUB01.png",
+          },
+          {
+            id: "ths_design_4",
+            name: "Build your own design",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/2-THS-SUB01.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/2-THS-SUB01.png",
+          },
+        ],
+        breakdown: null,
+      },
+      {
+        id: "BCK",
+        name: "Backpak (BCK)",
+        image:
+          "https://opuestoaqua.com/wp-content/uploads/2026/01/8-MOCKUP-BCK-SUB01.png",
+        features: [
+          {
+            label: "Description",
+            value: "Designed for athletes who need reliable storage on training and travel days, this custom team backpack delivers durability, comfort, and smart organization. Built for everyday use, it's ideal for carrying gear to practices, competitions, and team activities. The fully customizable front panels provide a bold space to display team logos and colors, while padded shoulder straps ensure comfortable carry throughout the day.",
+          },
+          {
+            label: "Benefits",
+            value: [
+              "No minimums",
+              "Option for individual names",
+              "Padded laptop sleeve",
+              "Cell phone pocket",
+              "Mesh water bottle holder",
+              "Large exterior pocket",
+              "Waterproof inside liner",
+              "Hairband zipper pull included",
+            ],
+          },
+          {
+            label: "Fabric features",
+            value: "100% durable nylon construction with polyester front panels for custom designs.",
+          },
+        ],
+        designs: [
+          {
+            id: "bck_design_1",
+            name: "BCK - Design 1",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/8-MOCKUP-BCK-SUB01.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/8-MOCKUP-BCK-SUB01.png",
+          },
+          {
+            id: "bck_design_2",
+            name: "BCK - Design 2",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/16-MOCKUP-BCK-SUB01.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/16-MOCKUP-BCK-SUB01.png",
+          },
+          {
+            id: "bck_design_3",
+            name: "BCK - Design 3",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/23-MOCKUP-BCK-SUB01-B.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/23-MOCKUP-BCK-SUB01-B.png",
+          },
+          {
+            id: "bck_design_4",
+            name: "BCK - Design 4",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/8-MOCKUP-BCK-SUB01-B.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/8-MOCKUP-BCK-SUB01-B.png",
+          },
+          {
+            id: "bck_design_5",
+            name: "Build your own design",
+            image:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/8-MOCKUP-BCK-SUB01.png",
+            fullDesign:
+              "https://opuestoaqua.com/wp-content/uploads/2026/01/8-MOCKUP-BCK-SUB01.png",
+          },
+        ],
+        breakdown: null,
+      },
+    ],
+  },
+};
+
+/* =========================================================
+   COLORES - PALETA OPUESTO
+   ========================================================= */
+const brandColors = [
+  { name: "Jet Black", hex: "#000000" },
+  { name: "Slate", hex: "#5B5555" },
+  { name: "Clay", hex: "#94867B" },
+  { name: "Pebble", hex: "#B8AFA8" },
+  { name: "Navy", hex: "#01305C" },
+  { name: "Plum", hex: "#4A0063" },
+  { name: "Orchid", hex: "#7D0076" },
+  { name: "Soft Violet", hex: "#CFA8F9" },
+  { name: "Power Pink", hex: "#EF007F" },
+  { name: "Bubblegum", hex: "#E7695E" },
+  { name: "Coral", hex: "#F9847A" },
+  { name: "Berry", hex: "#8D0022" },
+  { name: "Crimson", hex: "#DC0000" },
+  { name: "Tangerine", hex: "#FF6B21" },
+  { name: "Walnut", hex: "#6B3D01" },
+  { name: "Sienna", hex: "#AE5C2C" },
+  { name: "Cobalt", hex: "#200F99" },
+  { name: "Azure", hex: "#0089CF" },
+  { name: "Sky", hex: "#A9BED6" },
+  { name: "Peacock", hex: "#1F6481" },
+  { name: "Teal", hex: "#358C95" },
+  { name: "Seafoam", hex: "#7DDCC8" },
+  { name: "Blush", hex: "#CA9281" },
+  { name: "Pastel Pink", hex: "#FFE0E8" },
+  { name: "Forest", hex: "#005130" },
+  { name: "Olive", hex: "#6A6339" },
+  { name: "Sandstone", hex: "#C7AE6B" },
+  { name: "Lemonade", hex: "#FEED01" },
+  { name: "Canary", hex: "#FFF387" },
+  { name: "Volt", hex: "#51F210" },
+  { name: "Ivory", hex: "#FFFFF0" },
+  { name: "Bright White", hex: "#FFFFFF" }
+];
+
+/* =========================================================
+   ELEMENTOS DOM
+   ========================================================= */
+const categorySelect = document.getElementById("categorySelect");
+const selectedProductLabel = document.getElementById("selectedProductLabel");
+const productCardContainer = document.getElementById("productCardContainer");
+const productFeaturesContainer = document.getElementById("productFeaturesContainer");
+
+const designSection = document.getElementById("designSection");
+const designCardContainer = document.getElementById("designCardContainer");
+
+const colorSection = document.getElementById("colorSection");
+const colorSelector = document.getElementById("colorSelector");
+
+const breakdownSection = document.getElementById("breakdownSection");
+const breakdownImage = document.getElementById("breakdownImage");
+
+const logoSection = document.getElementById("logoSection");
+const logoSelectors = document.getElementById("logoSelectors");
+
+/* =========================================================
+   ESTADO
+   ========================================================= */
+let currentProduct = null;
+let logoUploadField = null;
+
+/* =========================================================
+   ELEMENTOR
+   ========================================================= */
+function setElementorField(fieldName, value) {
+  const el =
+    document.querySelector(`input[name="form_fields[${fieldName}]"]`) ||
+    document.getElementById(fieldName);
+
+  if (el) el.value = value;
+}
+
+/* =========================================================
+   VISIBILITY FLOWS
+   ========================================================= */
+function hideAllFlows() {
+  productFeaturesContainer.style.display = "none";
+  designSection.style.display = "none";
+  colorSection.style.display = "none";
+  breakdownSection.style.display = "none";
+  logoSection.style.display = "none";
+}
+
+function showDesignFlow() {
+  designSection.style.display = "block";
+  colorSection.style.display = "none";
+  breakdownSection.style.display = "none";
+  logoSection.style.display = "none";
+}
+
+function showColorFlow() {
+  colorSection.style.display = "block";
+  breakdownSection.style.display = "none";
+  logoSection.style.display = "none";
+}
+
+function showBreakdownFlow() {
+  breakdownSection.style.display = "block";
+  logoSection.style.display = "block";
+}
+
+/* =========================================================
+   RESET
+   ========================================================= */
+function resetAfterProductChange() {
+  hideAllFlows();
+
+  setElementorField("selectedDesign", "");
+  setElementorField("selectedColor", "");
+  setElementorField("selectedDesignImage", "");
+  setElementorField("selectedPlacements", "");
+
+  if (logoUploadField) {
+    logoUploadField.classList.add("hidden");
+  }
+
+  toggleLogoUploadVisibility();
+}
+
+/* =========================================================
+   CATEGORY CHANGE
+   ========================================================= */
+categorySelect.addEventListener("change", e => {
+  productCardContainer.innerHTML = "";
+  productFeaturesContainer.innerHTML = "";
+  resetAfterProductChange();
+  currentProduct = null;
+
+  setElementorField("selectedProduct", "");
+
+  if (selectedProductLabel) {
+    selectedProductLabel.textContent = "";
+    selectedProductLabel.classList.remove("is-visible");
+  }
+
+  const products = catalog.categories[e.target.value] || [];
+
+  // Emit reset event
+  window.dispatchEvent(new CustomEvent('opuesto:productChanged', { 
+    detail: { product: null, category: e.target.value } 
+  }));
+
+  products.forEach(product => {
+    productCardContainer.appendChild(
+      createCard(product, el => selectProduct(product, el))
+    );
+  });
+});
+
+/* =========================================================
+   PRODUCT FEATURES
+   ========================================================= */
+function renderFeatures(product) {
+  productFeaturesContainer.innerHTML = "";
+  
+  if (!product.features || product.features.length === 0) {
+    productFeaturesContainer.style.display = "none";
+    return;
+  }
+
+  product.features.forEach(feature => {
+    const featureItem = document.createElement("div");
+    featureItem.className = "feature-item";
+
+    const label = document.createElement("strong");
+    label.className = "feature-label";
+    label.textContent = feature.label;
+    featureItem.appendChild(label);
+
+    const value = document.createElement("div");
+    value.className = "feature-value";
+    
+    if (Array.isArray(feature.value)) {
+      const ul = document.createElement("ul");
+      feature.value.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        ul.appendChild(li);
+      });
+      value.appendChild(ul);
+    } else {
+      value.textContent = feature.value;
+    }
+    
+    featureItem.appendChild(value);
+    productFeaturesContainer.appendChild(featureItem);
+  });
+
+  productFeaturesContainer.style.display = "block";
+}
+
+/* =========================================================
+   PRODUCT SELECT
+   ========================================================= */
+function selectProduct(product, el) {
+  selectSingle(".product-card", productCardContainer, el);
+
+  currentProduct = product;
+  setElementorField("selectedProduct", product.name);
+
+  if (selectedProductLabel) {
+    selectedProductLabel.textContent = product.name;
+    selectedProductLabel.classList.add("is-visible");
+  }
+
+  resetAfterProductChange();
+  renderFeatures(product);
+  renderDesigns(product);
+
+  // Emit selection event
+  window.dispatchEvent(new CustomEvent('opuesto:productChanged', { 
+    detail: { 
+      product: product, 
+      category: categorySelect.value 
+    } 
+  }));
+}
+
+/* =========================================================
+   DESIGNS
+   ========================================================= */
+function renderDesigns(product) {
+  designCardContainer.innerHTML = "";
+  showDesignFlow();
+
+  product.designs.forEach(design => {
+    designCardContainer.appendChild(
+      createCard(design, el => {
+        resetMode();
+        selectSingle(".product-card", designCardContainer, el);
+
+        setElementorField("selectedDesign", design.name);
+        setElementorField("selectedDesignImage", design.image);
+        setElementorField("selectedColor", "N/A (Design selected)");
+
+        if (design.name === "Build your own design") {
+          renderBreakdownAndPlacements(product, "breakdown", design.fullDesign);
+        } else {
+          renderBreakdownAndPlacements(
+            product,
+            "fullDesign",
+            design.fullDesign
+          );
+        }
+      })
+    );
+  });
+
+  // Solid color
+  designCardContainer.appendChild(
+    createCard(
+      {
+        name: "Solid color",
+        image:
+          "https://images.icon-icons.com/1238/PNG/512/blacksquare_83753.png",
+      },
+      el => {
+        resetMode();
+        selectSingle(".product-card", designCardContainer, el);
+
+        setElementorField("selectedDesign", "Solid color");
+        setElementorField("selectedDesignImage", "");
+        setElementorField("selectedPlacements", "");
+
+        toggleLogoUploadVisibility();
+        showColorFlow();
+        renderColors();
+      }
+    )
+  );
+}
+
+/* =========================================================
+   COLORS
+   ========================================================= */
+function renderColors() {
+  colorSelector.innerHTML = "";
+  showColorFlow();
+
+  setElementorField("selectedColor", "");
+
+  brandColors?.forEach(color => {
+    const swatch = document.createElement("div");
+    swatch.className = "color-swatch";
+    swatch.style.backgroundColor = color.hex;
+
+    swatch.onclick = () => {
+      colorSelector
+        .querySelectorAll(".color-swatch")
+        .forEach(c => c.classList.remove("selected"));
+
+      swatch.classList.add("selected");
+
+      resetBreakdownOnly();
+
+      setElementorField("selectedColor", `${color.name} (${color.hex})`);
+
+      if (currentProduct) {
+        renderBreakdownAndPlacements(currentProduct, "breakdown");
+      }
+    };
+
+    colorSelector.appendChild(swatch);
+  });
+}
+
+/* =========================================================
+   BREAKDOWN + PLACEMENTS
+   ========================================================= */
+
+/* ================= CONDITIONS ================= */
+function shouldRenderBreakdown(product, mode) {
+  return product.breakdown || mode === "fullDesign";
+}
+
+/* ================= IMAGE ================= */
+function renderBreakdownImage(product, mode, fullDesignImage) {
+  let imageToRender;
+
+  if (mode === "fullDesign") {
+    imageToRender = fullDesignImage || product.breakdown?.image;
+  } else {
+    // For breakdown mode, use the breakdown blueprint if it exists,
+    // otherwise fallback to fullDesignImage (useful for 'Build your own design')
+    imageToRender = product.breakdown?.image || fullDesignImage;
+  }
+
+  if (!imageToRender) {
+    breakdownSection.style.display = "none";
+    return;
+  }
+  
+  breakdownSection.style.display = "block";
+  breakdownImage.src = imageToRender;
+}
+
+/* ================= FORMAT ================= */
+function formatPlacements(selected) {
+  return Object.entries(selected)
+    .map(([name, options]) => `• ${name}: ${options.join(", ")}`)
+    .join("<br>");
+}
+
+/* ================= STATE ================= */
+function updateSelectedPlacements(selected, placeName, option, isChecked) {
+  if (!selected[placeName]) selected[placeName] = [];
+
+  if (isChecked) {
+    if (!selected[placeName].includes(option)) {
+      selected[placeName].push(option);
+    }
+  } else {
+    selected[placeName] = selected[placeName].filter(o => o !== option);
+    if (selected[placeName].length === 0) {
+      delete selected[placeName];
+    }
+  }
+
+  setElementorField("selectedPlacements", formatPlacements(selected));
+  toggleLogoUploadVisibility();
+}
+
+/* ================= OPTION UI ================= */
+function createPlacementOption(place, option, selected) {
+  const label = document.createElement("label");
+  label.className = "placement-option";
+
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.className = "placement-checkbox";
+
+  checkbox.addEventListener("change", () => {
+    updateSelectedPlacements(
+      selected,
+      place.name,
+      option,
+      checkbox.checked
+    );
+  });
+
+  const span = document.createElement("span");
+  span.textContent = option;
+
+  label.appendChild(checkbox);
+  label.appendChild(span);
+
+  return label;
+}
+
+/* ================= WRAPPER UI ================= */
+function createPlacementWrapper(place, selected) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "placement-field";
+
+  const title = document.createElement("strong");
+  title.className = "placement-title";
+  title.textContent = place.name;
+  wrapper.appendChild(title);
+
+  place.options.forEach(option => {
+    wrapper.appendChild(
+      createPlacementOption(place, option, selected)
+    );
+  });
+
+  return wrapper;
+}
+
+/* ================= PLACEMENTS ================= */
+function renderPlacements(placements) {
+  logoSelectors.innerHTML = "";
+  logoSelectors.classList.add("logo-selectors");
+
+  const selected = {};
+
+  placements.forEach(place => {
+    logoSelectors.appendChild(
+      createPlacementWrapper(place, selected)
+    );
+  });
+}
+
+/* ================= MAIN ================= */
+function renderBreakdownAndPlacements(
+  product,
+  mode = "breakdown",
+  fullDesignImage = null
+) {
+  if (!shouldRenderBreakdown(product, mode)) return;
+
+  showBreakdownFlow();
+  renderBreakdownImage(product, mode, fullDesignImage);
+
+  if (!product.breakdown?.placements) return;
+  renderPlacements(product.breakdown.placements);
+
+  toggleLogoUploadVisibility();
+}
+
+/* =========================================================
+   LOGO UPLOAD
+   ========================================================= */
+function toggleLogoUploadVisibility() {
+  if (!logoUploadField) return;
+
+  const anyChecked = logoSelectors.querySelector(
+    'input[type="checkbox"]:checked'
+  );
+
+  logoUploadField.classList.toggle("hidden", !anyChecked);
+}
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+function createCard(data, onClick) {
+  const card = document.createElement("div");
+  card.className = "product-card";
+  card.innerHTML = `
+    <img src="${data.image}">
+    <div>${data.name}</div>
+  `;
+  card.onclick = () => onClick(card);
+  return card;
+}
+
+function selectSingle(selector, container, el) {
+  container
+    .querySelectorAll(selector)
+    .forEach(c => c.classList.remove("selected"));
+  el.classList.add("selected");
+}
+
+function initLogoUploadField() {
+  const input = document.getElementById("form-field-uploadedFile");
+  if (!input) return;
+
+  const field = input.closest(".elementor-field-type-upload");
+  if (!field) return;
+
+  logoUploadField = field;
+  logoUploadField.classList.add("hidden");
+}
+
+function resetMode() {
+  colorSection.style.display = "none";
+  breakdownSection.style.display = "none";
+  logoSection.style.display = "none";
+
+  breakdownImage.src = "";
+  logoSelectors.innerHTML = "";
+
+  setElementorField("selectedPlacements", "");
+}
+
+function resetBreakdownOnly() {
+  breakdownSection.style.display = "none";
+  logoSection.style.display = "none";
+
+  breakdownImage.src = "";
+  logoSelectors.innerHTML = "";
+
+  setElementorField("selectedPlacements", "");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  setTimeout(initLogoUploadField, 300);
+});
+
+</script>
+

@@ -1,0 +1,399 @@
+<style>
+:root {
+  --op-darkBlue: #050E35;
+  --op-blue: #519CAB;
+  --op-black: #111111;
+  --op-light: #F5F5F7;
+}
+
+/* ================= LABEL ================= */
+.label-title {
+  display: inline-block;
+  margin: 32px 0 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--op-black);
+  position: relative;
+}
+
+.label-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 24px;
+  height: 3px;
+  background: var(--op-blue);
+}
+
+/* ================= INPUT & SELECT ================= */
+.op-input,
+.op-select {
+  width: 100%;
+  padding: 16px 24px;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 12px !important; /* Subtle rounded corners */
+  border: 2px solid var(--op-darkBlue) !important; /* Refined border */
+  background: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--op-darkBlue);
+  outline: none;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(81, 156, 171, 0.15) !important; /* Soft fluid shadow */
+  min-height: 48px;
+}
+
+/* Flecha personalizada para el select sin necesidad de wrapper */
+.op-select {
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23050E35" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  cursor: pointer;
+}
+
+.op-input:focus,
+.op-input:hover,
+.op-select:focus,
+.op-select:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 20px rgba(81, 156, 171, 0.25) !important;
+}
+
+/* Ocultar las flechas nativas (spinners) del input tipo número */
+.op-input[type="number"] {
+  -moz-appearance: textfield; /* Para Firefox */
+}
+.op-input[type="number"]::-webkit-outer-spin-button,
+.op-input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* ================= GRID ================= */
+.namesGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+/* ===== ROW ===== */
+.product-row {
+  display: contents;
+}
+
+.hidden {
+  display: none;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 640px) {
+  .namesGrid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<!-- ===== AMOUNT ===== -->
+<label class="label-title">List of names</label>
+<input
+  id="amountProducts"
+  type="number"
+  min="1"
+  class="op-input"
+  placeholder="Enter amount (min 1)"
+/>
+
+<!-- ===== DYNAMIC FIELDS ===== -->
+<div id="namesContainer" class="namesGrid"></div>
+
+<!-- ================= HIDDEN ================= -->
+<input type="hidden" id="productsSummary" name="productsSummary">
+<input type="hidden" id="productsTableHtml" name="productsTableHtml">
+
+<script>
+/* ================= CONFIG ================= */
+const MAX_PRODUCTS = 20;
+let currentProductInfo = { product: null, category: null };
+
+const SIZE_CHARTS = {
+  default: [
+    { group: "Child/Youth", sizes: ["Y4", "Y6", "YXS", "YS", "YM", "YL"], prefix: "" },
+    { group: "Adult", sizes: ["XS", "S", "M", "L", "XL", "XXL", "XXXL"], prefix: "" }
+  ],
+  slides: [
+    { group: "Child", sizes: ["11", "12", "13", "1", "2", "3", "4"], prefix: "c" },
+    { group: "Women", sizes: ["5", "6", "7", "8", "9", "10", "11"], prefix: "w" },
+    { group: "Men", sizes: ["6", "7", "8", "9", "10", "11", "12"], prefix: "m" }
+  ],
+  none: []
+};
+
+/* ================= DOM ================= */
+const amountInput = document.getElementById("amountProducts");
+const namesContainer = document.getElementById("namesContainer");
+const productsSummaryField = document.getElementById("productsSummary");
+let productsTableHtmlField = null;
+
+function initProductsTableField() {
+  productsTableHtmlField = document.querySelector(
+    'input[name="form_fields[productsTableHtml]"]'
+  );
+}
+
+/* ================= STATE ================= */
+let uploadedNamesFileField = null;
+
+/* ================= INIT FILE FIELD ================= */
+function initUploadedNamesFileField() {
+  const input = document.getElementById("form-field-uploadedNamesFile");
+  if (!input) return;
+
+  const field = input.closest(".elementor-field-type-upload");
+  if (!field) return;
+
+  uploadedNamesFileField = field;
+  uploadedNamesFileField.classList.add("hidden");
+}
+
+/* ================= VISIBILITY ================= */
+function showUploadedNamesFile() {
+  if (!uploadedNamesFileField) return;
+  uploadedNamesFileField.classList.remove("hidden");
+}
+
+function hideUploadedNamesFile() {
+  if (!uploadedNamesFileField) return;
+  uploadedNamesFileField.classList.add("hidden");
+}
+
+/* ================= EVENTS ================= */
+amountInput.addEventListener("input", () => {
+  let amount = parseInt(amountInput.value, 10);
+
+  /* ===== RESET ===== */
+  if (isNaN(amount) || amount < 1) {
+    namesContainer.innerHTML = "";
+    productsSummaryField.value = "";
+    hideUploadedNamesFile();
+    return;
+  }
+
+  /* ===== EXCEEDS MAX ===== */
+  if (amount > MAX_PRODUCTS) {
+    namesContainer.innerHTML = "";
+    productsSummaryField.value = "";
+    showUploadedNamesFile();
+    return;
+  }
+
+  /* ===== NORMAL FLOW ===== */
+  hideUploadedNamesFile();
+  renderProductFields(amount);
+});
+
+/* ================= SYNC ================= */
+window.addEventListener('opuesto:productChanged', (e) => {
+  currentProductInfo = e.detail;
+  
+  // Re-render if we already have an amount
+  const amount = parseInt(amountInput.value, 10);
+  if (!isNaN(amount) && amount > 0 && amount <= MAX_PRODUCTS) {
+    renderProductFields(amount);
+  }
+});
+
+/* ================= RENDER ================= */
+function getActiveSizeChart() {
+  const { product, category } = currentProductInfo;
+  
+  if (category === 'accessories') {
+    if (product?.id === 'SLD') return SIZE_CHARTS.slides;
+    if (product?.id === 'THS' || product?.id === 'BCK') return SIZE_CHARTS.none;
+  }
+  
+  return SIZE_CHARTS.default;
+}
+
+function renderProductFields(amount) {
+  namesContainer.innerHTML = "";
+  const activeSizes = getActiveSizeChart();
+  const isAnonymous = currentProductInfo.product?.id === 'THS' || currentProductInfo.product?.id === 'BCK';
+
+  if (!isAnonymous) {
+    for (let i = 1; i <= amount; i++) {
+      namesContainer.appendChild(createNameField(i));
+      
+      if (activeSizes.length > 0) {
+        namesContainer.appendChild(createSizeField(i, activeSizes));
+      }
+    }
+  }
+
+  updateProductsSummary();
+}
+
+/* ================= FIELDS ================= */
+function createNameField(index) {
+  const input = document.createElement("input");
+  input.type = "text";
+  input.className = "op-input";
+  input.placeholder = `Name ${index}`;
+  input.name = `product_name_${index}`;
+
+  input.addEventListener("input", updateProductsSummary);
+
+  return input;
+}
+
+function createSizeField(index, activeSizes) {
+  const select = document.createElement("select");
+  select.className = "op-select";
+  select.name = `product_size_${index}`;
+
+  const placeholder = document.createElement("option");
+  placeholder.value = "";
+  placeholder.textContent = `Size ${index}`;
+  placeholder.disabled = true;
+  placeholder.selected = true;
+
+  select.appendChild(placeholder);
+
+  activeSizes.forEach(category => {
+    const optgroup = document.createElement("optgroup");
+    optgroup.label = category.group;
+    category.sizes.forEach(size => {
+      const option = document.createElement("option");
+      option.value = (category.prefix + size).toLowerCase();
+      option.textContent = size.replace(/^Y(4|6)$/, "$1");
+      optgroup.appendChild(option);
+    });
+    select.appendChild(optgroup);
+  });
+
+  select.addEventListener("change", updateProductsSummary);
+
+  return select;
+}
+
+/* ================= TOTAL SIZE ================= */
+function updateSizesTotals() {
+  const sizeCounters = {};
+
+  // Initialize all possible counters dynamically from SIZE_CHARTS
+  Object.values(SIZE_CHARTS).forEach(chart => {
+    chart.forEach(group => {
+      group.sizes.forEach(size => {
+        const key = (group.prefix + size).toLowerCase();
+        sizeCounters[key] = 0;
+      });
+    });
+  });
+
+  for (let i = 1; i <= MAX_PRODUCTS; i++) {
+    const sizeInput = document.querySelector(
+      `select[name="product_size_${i}"]`
+    );
+
+    if (!sizeInput) continue;
+
+    const sizeKey = sizeInput.value; // Store already has the prefix from createSizeField
+
+    if (sizeKey && sizeCounters.hasOwnProperty(sizeKey)) {
+      sizeCounters[sizeKey]++;
+    }
+  }
+
+  // Helper para setear hidden fields de Elementor
+  const setHidden = (id, value) => {
+    const field = document.querySelector(
+      `input[name="form_fields[total_size_${id}]"]`
+    );
+    if (field) field.value = value;
+  };
+
+  Object.entries(sizeCounters).forEach(([key, count]) => {
+    setHidden(key, count);
+  });
+}
+
+
+/* ================= SUMMARY ================= */
+function updateProductsSummary() {
+  const amount = parseInt(amountInput.value, 10);
+
+  if (isNaN(amount) || amount < 1 || amount > MAX_PRODUCTS) {
+    productsSummaryField.value = "";
+
+    for (let i = 1; i <= MAX_PRODUCTS; i++) {
+      const nameHidden = document.querySelector(
+        `input[name="form_fields[name_${i}]"]`
+      );
+      const sizeHidden = document.querySelector(
+        `input[name="form_fields[size_${i}]"]`
+      );
+
+      if (nameHidden) nameHidden.value = "";
+      if (sizeHidden) sizeHidden.value = "";
+    }
+
+    updateSizesTotals();
+    return;
+  }
+
+  const products = [];
+
+  for (let i = 1; i <= amount && i <= MAX_PRODUCTS; i++) {
+    const nameInput = document.querySelector(
+      `input[name="product_name_${i}"]`
+    );
+    const sizeSelect = document.querySelector(
+      `select[name="product_size_${i}"]`
+    );
+
+    const nameHidden = document.querySelector(
+      `input[name="form_fields[name_${i}]"]`
+    );
+    const sizeHidden = document.querySelector(
+      `input[name="form_fields[size_${i}]"]`
+    );
+
+    const name = nameInput?.value || "";
+    const size = sizeSelect?.value || "";
+
+    // Guarda para summary (tu lógica original)
+    products.push({ name, size });
+
+    // Guarda en Elementor hidden
+    if (nameHidden) nameHidden.value = name;
+    if (sizeHidden) sizeHidden.value = size;
+  }
+
+  productsSummaryField.value = JSON.stringify(products);
+
+  updateSizesTotals();
+}
+
+/* ================= INIT ================= */
+document.addEventListener("DOMContentLoaded", () => {
+  setTimeout(() => {
+    initUploadedNamesFileField();
+    initProductsTableField();
+
+    // Check for initial product selection (if already set in hidden field)
+    const productField = document.querySelector('input[name="form_fields[selectedProduct]"]') || document.getElementById('selectedProduct');
+    const categorySelect = document.getElementById('categorySelect');
+    
+    if (productField && productField.value) {
+      // Small delay to ensure catalog is ready in the other component if needed
+      // but here we just need to know it's NOT empty to potentially trigger a fetch
+      // or we can just rely on the event since they are on the same page.
+    }
+  }, 300);
+});
+</script>
+
