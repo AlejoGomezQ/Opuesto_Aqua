@@ -28,6 +28,17 @@
   background: var(--op-blue);
 }
 
+.label-description {
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #666666;
+  margin-top: -4px;
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
 /* ================= INPUT & SELECT ================= */
 .op-input,
 .op-select {
@@ -100,6 +111,7 @@
 
 <!-- ===== AMOUNT ===== -->
 <label class="label-title">List of names</label>
+<span class="label-description">Enter the names and sizes for every athlete to ensure a cohesive team look.</span>
 <input
   id="amountProducts"
   type="number"
