@@ -1001,7 +1001,7 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/1-SLD-SUB01.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-SLD-SUB01.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/04/1-SDL-SUB.png",
           },
           {
             id: "sld_design_2",
@@ -1009,7 +1009,7 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/1-SLD-SUB01-2-NEW.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-SLD-SUB01-2-NEW.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/04/1B-SDL-SUB.png",
           },
           {
             id: "sld_design_3",
@@ -1017,7 +1017,7 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/4-SLD-SUB01.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/4-SLD-SUB01.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/04/4-SDL-SUB.png",
           },
           {
             id: "sld_design_4",
@@ -1025,7 +1025,7 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/24-SLD-SUB01.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/24-SLD-SUB01.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/04/24-DL-SUB.png",
           },
           {
             id: "sld_design_5",
@@ -1033,10 +1033,16 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/1-SLD-SUB01.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-SLD-SUB01.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/04/24-DL-SUB_1.png",
           },
         ],
-        breakdown: null,
+        breakdown: {
+          image: "https://opuestoaqua.com/wp-content/uploads/2026/04/24-DL-SUB_1.png",
+          placements: [
+            { name: "Right", options: ["Logo"] },
+            { name: "Left", options: ["Logo"] },
+          ],
+        },
       },
       {
         id: "THS",
@@ -1069,7 +1075,7 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/2-THS-SUB01.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/2-THS-SUB01.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/04/2-THS-SUB01.png",
           },
           {
             id: "ths_design_2",
@@ -1077,7 +1083,7 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/3-THS-SUB01.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/3-THS-SUB01.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/04/3-THS-SUB01.png",
           },
           {
             id: "ths_design_3",
@@ -1085,7 +1091,7 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/21-THS-SUB01.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/21-THS-SUB01.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/04/21THS-SUB01.png",
           },
           {
             id: "ths_design_4",
@@ -1093,10 +1099,15 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/2-THS-SUB01.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/2-THS-SUB01.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/04/2-THS-SUB01_1.png",
           },
         ],
-        breakdown: null,
+        breakdown: {
+          image: "https://opuestoaqua.com/wp-content/uploads/2026/04/2-THS-SUB01_1.png",
+          placements: [
+            { name: "Repeating pattern", options: ["Logo"] },
+          ],
+        },
       },
       {
         id: "BCK",
@@ -1133,7 +1144,7 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/8-MOCKUP-BCK-SUB01.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/8-MOCKUP-BCK-SUB01.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/04/1BCK-SUB.png",
           },
           {
             id: "bck_design_2",
@@ -1141,7 +1152,7 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/16-MOCKUP-BCK-SUB01.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/16-MOCKUP-BCK-SUB01.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/04/16-BCK-SUB.png",
           },
           {
             id: "bck_design_3",
@@ -1149,7 +1160,7 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/23-MOCKUP-BCK-SUB01-B.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/23-MOCKUP-BCK-SUB01-B.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/04/23-BCK-SUB.png",
           },
           {
             id: "bck_design_4",
@@ -1157,7 +1168,7 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/8-MOCKUP-BCK-SUB01-B.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/8-MOCKUP-BCK-SUB01-B.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/04/8B-BCK-SUB.png",
           },
           {
             id: "bck_design_5",
@@ -1165,10 +1176,16 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/8-MOCKUP-BCK-SUB01.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/8-MOCKUP-BCK-SUB01.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/04/1BCK-SUB_1.png",
           },
         ],
-        breakdown: null,
+        breakdown: {
+          image: "https://opuestoaqua.com/wp-content/uploads/2026/04/1BCK-SUB_1.png",
+          placements: [
+            { name: "Lower front print", options: ["Logo"] },
+            { name: "Upper front print", options: ["Logo"] },
+          ],
+        },
       },
     ],
   },
