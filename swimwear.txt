@@ -479,257 +479,288 @@ const catalog = {
   categories: {
     female: [
       {
-        id: "XTS",
-        name: "Female cross training (XTS)",
-        image:
-          "https://opuestoaqua.com/wp-content/uploads/2026/01/4-XTS-SUB01-FRONT.png",
+        id: "SMB",
+        name: "Swim mesh back (SMB)",
+        image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB00.png",
         features: [
           {
             label: "Description",
-            value: "Experience the freedom of our lightweight, moisture-wicking shorts—the perfect choice for drying off after a swim or staying cool during your favorite outdoor adventures. Create with flexible fabric that allows for free ease of movement. Allow our brand to become part of your team's identity or customize your own look by picking your favorite shade from our extensive color chart.",
+            value: "This mesh-back swimsuit is specifically designed for enhanced compression without sacrificing agility or speed. Experience the comfort of premium two-way stretch fabric and high-speed mesh. \"Built for those who beat the sun to the pool.\"",
           },
           {
             label: "Benefits",
             value: [
-              "Provides a secure, stay-put fit that moves with your body.",
-              "Fresh, soft, and moisture-wicking material designed for maximum breathability.",
-              "Tailored with flexible fabric to allow a full range of motion for any sporty activity.",
-              "Designed to be effortless and comfortable to slip on and off.",
+              "Featuring our signature two-way stretch fabric, this suit provides the perfect balance of locked-in durability and rhythmic comfort.",
             ],
           },
         ],
         designs: [
           {
-            id: "xts_design_1",
-            name: "XTS - Design 1",
-            image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/4-XTS-SUB01-FRONT.png",
-            fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/03/4-XTS-SUB01.png",
+            id: "smb_design_1",
+            name: "SMB - Design 1",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB00.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB00-.png",
           },
           {
-            id: "xts_design_2",
-            name: "XTS - Design 2",
-            image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/5-XTS-SUB01-FRONT.png",
-            fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/03/5-XTS-SUB01.png",
+            id: "smb_design_2",
+            name: "SMB - Design 2",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB02.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB01-.png",
           },
           {
-            id: "xts_design_3",
-            name: "XTS - Design 3",
-            image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/8-XTS-SUB01-FRONT.png",
-            fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/03/8-XTS-SUB01.png",
+            id: "smb_design_3",
+            name: "SMB - Design 3",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB01-1-1.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB03-.png",
           },
           {
-            id: "xts_design_4",
-            name: "XTS - Design 4",
-            image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/16-XTS-SUB01-FRONT.png",
-            fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/03/16-XTS-SUB01.png",
+            id: "smb_design_4",
+            name: "SMB - Design 4",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB03.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB02-.png",
           },
           {
-            id: "xts_design_5",
-            name: "XTS - Design 5",
-            image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/24-XTS-SUB01-FRONT.png",
-            fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/03/24-XTS-SUB01.png",
-          },
-          {
-            id: "xts_design_6",
+            id: "smb_design_5",
             name: "Build your own design",
-            image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/4-XTS-SUB01-FRONT.png",
-            fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/03/XTS-PLACEMENTS.png",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB00.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB00_1.png",
           },
         ],
         breakdown: {
-          image:
-            "https://opuestoaqua.com/wp-content/uploads/2026/03/XTS-PLACEMENTS.png",
+          image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB00_1.png",
           placements: [
-            { name: "Outside front waistband", options: ["Logo"] },
-            { name: "Outside back waistband", options: ["Logo"] },
-            { name: "Right front panel", options: ["Logo"] },
-            { name: "Left front panel", options: ["Logo"] },
+            { name: "Front chest", options: ["Logo"] },
+            { name: "Front right", options: ["Logo"] },
+          ],
+        },
+      },
+      {
+        id: "SSB",
+        name: "Swim strap back (SSB)",
+        image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB00.png",
+        features: [
+          {
+            label: "Description",
+            value: "Professional warm-ups are intense. This suit that is \"built to warm up and swim\" suggests it has the perfect balance of flexibility for mobility and compression for speed. Most suits are built for seconds. Ours is built for hours. Whether you’re stretching on the deck, grinding through a 5k, or cooling down after a meet, this suit maintains its fit and your focus. Train without limits.",
+          },
+          {
+            label: "Benefits",
+            value: [
+              "Featuring our signature two-way stretch fabric, this suit provides the perfect balance of locked-in durability and rhythmic comfort.",
+            ],
+          },
+        ],
+        designs: [
+          {
+            id: "ssb_design_1",
+            name: "SSB - Design 1",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB00.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB00-.png",
+          },
+          {
+            id: "ssb_design_2",
+            name: "SSB - Design 2",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB02.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB01-.png",
+          },
+          {
+            id: "ssb_design_3",
+            name: "SSB - Design 3",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB01-1-1.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB03-.png",
+          },
+          {
+            id: "ssb_design_4",
+            name: "SSB - Design 4",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB03.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB02-.png",
+          },
+          {
+            id: "ssb_design_5",
+            name: "Build your own design",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB00.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB00_1.png",
+          },
+        ],
+        breakdown: {
+          image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB00_1.png",
+          placements: [
+            { name: "Front panel", options: ["Logo"] },
+            { name: "Back", options: ["Logo"] },
+          ],
+        },
+      },
+      {
+        id: "SVB",
+        name: "Swim V back (SVB)",
+        image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB00.png",
+        features: [
+          {
+            label: "Description",
+            value: "Designed for the team, perfected for the individual. This isn't just a swimsuit; it’s an invitation to explore your own limits. Designed with a timeless silhouette that makes you and your team feel at home in any lane, our latest release is built for the long haul.",
+          },
+          {
+            label: "Benefits",
+            value: [
+              "Featuring our signature two-way stretch fabric, this suit provides the perfect balance of locked-in durability and rhythmic comfort.",
+            ],
+          },
+        ],
+        designs: [
+          {
+            id: "svb_design_1",
+            name: "SVB - Design 1",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB00.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB00-.png",
+          },
+          {
+            id: "svb_design_2",
+            name: "SVB - Design 2",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB02.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB01-.png",
+          },
+          {
+            id: "svb_design_3",
+            name: "SVB - Design 3",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB01-1-1.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB03-.png",
+          },
+          {
+            id: "svb_design_4",
+            name: "SVB - Design 4",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB03.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB02-.png",
+          },
+          {
+            id: "svb_design_5",
+            name: "Build your own design",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB00.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB00_1.png",
+          },
+        ],
+        breakdown: {
+          image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SMB-SUB00_1.png",
+          placements: [
+            { name: "Front panel", options: ["Logo"] },
+            { name: "Back", options: ["Logo"] },
           ],
         },
       },
     ],
     male: [
       {
-        id: "JGR",
-        name: "Jogger unisex (JGR)",
+        id: "SBF",
+        name: "Swim brief (SBF)",
         image:
-          "https://opuestoaqua.com/wp-content/uploads/2026/01/1-JGR-SUB01-2-FRONT.png",
+          "https://opuestoaqua.com/wp-content/uploads/2026/04/20-BRIEF.png",
         features: [
           {
             label: "Description",
-            value: "Designed for performance beyond the pool, these unisex joggers are built to support athletes before, during, and after training. Their flexible, performance-driven fabric allows full freedom of movement, making them ideal for warm-ups, recovery, travel, and everyday athletic use. They feature an adjustable drawstring waistband for a secure and comfortable fit, zippered side pockets to keep essentials safe, and a tapered leg design for a modern, streamlined silhouette.",
+            value: "Power. Performance. Team Spirit. Introducing the short designed for those who train without limits. Experience our strong, comfy, and firm bi-directional fabric, technically made to support high-intensity training in the water.",
           },
           {
             label: "Benefits",
             value: [
-              "All Sizes",
-              "No Minimums",
-              "UV Protection",
-              "Vibrant Colors",
-              "Moisture Wicking/Quick Drying",
-              "Antimicrobial Properties",
+              "Developed with flexible fabric that allows for free ease of movement and total mobility.",
             ],
-          },
-          {
-            label: "Fabric features",
-            value: "Polyester.",
           },
         ],
         designs: [
           {
-            id: "jgr_design_1",
-            name: "JGR - Design 1",
-            image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-JGR-SUB01-2-FRONT.png",
-            fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/03/1B-JGR-SUB.png",
+            id: "sbf_design_1",
+            name: "SBF - Design 1",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/20-BRIEF.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/20-SBF.png",
           },
           {
-            id: "jgr_design_2",
-            name: "JGR - Design 2",
-            image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-JGR-SUB01-FRONT.png",
-            fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/03/1-JGR-SUB.png",
+            id: "sbf_design_2",
+            name: "SBF - Design 2",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/21-BRIEF.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/21-SBF.png",
           },
           {
-            id: "jgr_design_3",
-            name: "JGR - Design 3",
-            image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/3-JGR-SUB01-FRONT.png",
-            fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/03/3-JGR-SUB.png",
+            id: "sbf_design_3",
+            name: "SBF - Design 3",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/22-BRIEF.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/22-SBF.png",
           },
           {
-            id: "jgr_design_4",
-            name: "JGR - Design 4",
-            image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/6-JGR-SUB01-FRONT.png",
-            fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/03/6-JGR-SUB.png",
+            id: "sbf_design_4",
+            name: "SBF - Design 4",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/23-BRIEF.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/23-SBF.png",
           },
           {
-            id: "jgr_design_5",
-            name: "JGR - Design 5",
-            image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/9-JGR-SUB01-FRONT.png",
-            fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/03/9-JGR-SUB.png",
+            id: "sbf_design_5",
+            name: "SBF - Design 5",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/24-BRIEF.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/24-SBF.png",
           },
           {
-            id: "jgr_design_6",
-            name: "JGR - Design 6",
-            image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/15-JGR-SUB01-FRONT.png",
-            fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/03/15-JGR-SUB.png",
-          },
-          {
-            id: "jgr_design_7",
+            id: "sbf_design_6",
             name: "Build your own design",
-            image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-JGR-SUB01-2-FRONT.png",
-            fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/03/JGR-PLACEMENTS.png",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/20-BRIEF.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/20-SBF_1.png",
           },
         ],
         breakdown: {
-          image: "https://opuestoaqua.com/wp-content/uploads/2026/03/JGR-PLACEMENTS.png",
+          image: "https://opuestoaqua.com/wp-content/uploads/2026/04/20-SBF_1.png",
           placements: [
-            { name: "Back right", options: ["Text"] },
-            { name: "Front 1 right", options: ["Logo"] },
-            { name: "Front 2 right", options: ["Text"] },
-            { name: "Front 4 right", options: ["Text"] },
-            { name: "Front 1 left", options: ["Logo"] },
-            { name: "Front 2 left", options: ["Text"] },
-            { name: "Front 4 left", options: ["Text"] },
-            { name: "Back left", options: ["Text"] },
+            { name: "Back", options: ["Logo"] },
           ],
         },
       },
       {
-        id: "WUP",
-        name: "Warmup pant unisex (WUP)",
+        id: "SJM",
+        name: "Swim jammer (SJM)",
         image:
-          "https://opuestoaqua.com/wp-content/uploads/2026/01/7-WUP-SUB-FRONT.png",
+          "https://opuestoaqua.com/wp-content/uploads/2026/04/SJM-SUB00.png",
         features: [
           {
             label: "Description",
-            value: "Designed for warm-ups, mobility, and recovery, these high-performance pants are built to move with the athlete. Created with fabric made with 63% recycled plastic water bottles, they combine durability, comfort, and a responsible approach to sustainability. A strategic knee construction enhances flexibility and allows for deep bends, lunges, and dynamic movements without restriction, making them ideal for pre-competition routines and active recovery.",
+            value: "Performance Meets Custom Style. Don’t settle for basic gear. Our training shorts are built for those who demand both style and function.",
           },
           {
             label: "Benefits",
             value: [
-              "All Sizes",
-              "No Minimums",
-              "Antimicrobial Properties",
-              "Moisture Wicking",
-              "UV Protection",
-              "Quick Drying",
-              "Water resistant",
-              "Flexible knees for ultimate range of motion",
+              "Flexible fabric allows for free ease of movement in any direction.",
+              "Pick your favorite shade from our extensive color chart to match your team’s spirit.",
+              "Lightweight and moisture-wicking—perfect for after-swim or outdoor adventures."
             ],
-          },
-          {
-            label: "Fabric features",
-            value: "A high-performance polyester–spandex blend offering four-way stretch and enhanced mobility.",
           },
         ],
         designs: [
           {
-            id: "wup_design_1",
-            name: "WUP - Design 1",
-            image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/2-WUP-SUB-FRONT.png",
-            fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/03/2-WUP-SUB.png",
+            id: "sjm_design_1",
+            name: "SJM - Design 1",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SJM-SUB00.png",
+            fullDesign: "",
           },
           {
-            id: "wup_design_2",
-            name: "WUP - Design 2",
-            image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/7-WUP-SUB-FRONT.png",
-            fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/03/7-WUP-SUB7.png",
+            id: "sjm_design_2",
+            name: "SJM - Design 2",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SJM-SUB01.png",
+            fullDesign: "",
           },
           {
-            id: "wup_design_3",
-            name: "WUP - Design 3",
-            image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/10-WUP-SUB-FRONT.png",
-            fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/03/10-WUP-SUB.png",
+            id: "sjm_design_3",
+            name: "SJM - Design 3",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SJM-SUB02.png",
+            fullDesign: "",
           },
           {
-            id: "wup_design_4",
+            id: "sjm_design_4",
+            name: "SJM - Design 4",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SJM-SUB03.png",
+            fullDesign: "",
+          },
+          {
+            id: "sjm_design_5",
             name: "Build your own design",
-            image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/7-WUP-SUB-FRONT.png",
-            fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/03/WUP-PLACEMENTS.png",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SJM-SUB00.png",
+            fullDesign: "",
           },
         ],
-        breakdown: {
-          image: "https://opuestoaqua.com/wp-content/uploads/2026/03/WUP-PLACEMENTS.png",
-          placements: [
-            { name: "Front right", options: ["Logo"] },
-            { name: "Front left", options: ["Logo"] },
-            { name: "Back right", options: ["Text"] },
-            { name: "Back left", options: ["Text"] },
-          ],
-        },
       },
     ],
     accessories: [
