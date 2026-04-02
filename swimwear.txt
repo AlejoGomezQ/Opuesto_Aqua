@@ -652,7 +652,7 @@ const catalog = {
           {
             id: "svb_design_5",
             name: "Build your own design",
-            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/SVB-SUB00-1.png",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/Mesa-de-trabajo-34.png",
             fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/SVB-SUB00-1-1.png",
           },
         ],
@@ -661,6 +661,59 @@ const catalog = {
           placements: [
             { name: "Front chest", options: ["Logo"] },
             { name: "Front right", options: ["Logo"] },
+          ],
+        },
+      },
+      {
+        id: "WUN",
+        name: "Leotard (WUN)",
+        image: "https://opuestoaqua.com/wp-content/uploads/2026/04/WUN-SUB01.png",
+        features: [
+          {
+            label: "Description",
+            value: "This leotard features a high neck, a scoop-back design and a traditional training cut for maximum comfort and support. The super soft, high-quality fabric will last through endless wash cycles to keep up with your training.",
+          },
+        ],
+        designs: [
+          {
+            id: "wun_design_1",
+            name: "WUN - Design 1",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/WUN-SUB01.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/WUN-SUB01-.png",
+          },
+          {
+            id: "wun_design_2",
+            name: "WUN - Design 2",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/WUN-SUB02.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/WUN-SUB04-.png",
+          },
+          {
+            id: "wun_design_3",
+            name: "WUN - Design 3",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/WUN-SUB03.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/WUN-SUB02-.png",
+          },
+          {
+            id: "wun_design_4",
+            name: "WUN - Design 4",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/WUN-SUB04.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/WUN-SUB03-.png",
+          },
+          {
+            id: "wun_design_5",
+            name: "Build your own design",
+            image: "https://opuestoaqua.com/wp-content/uploads/2026/04/Mesa-de-trabajo-34.png",
+            fullDesign: "https://opuestoaqua.com/wp-content/uploads/2026/04/WUN-SUB01_1.png",
+          },
+        ],
+        breakdown: {
+          image: "https://opuestoaqua.com/wp-content/uploads/2026/04/WUN-SUB01_1.png",
+          placements: [
+            { name: "Front upper right", options: ["Logo"] },
+            { name: "Front upper left", options: ["Logo"] },
+            { name: "Front lower right", options: ["Logo"] },
+            { name: "Front lower left", options: ["Logo"] },
+            { name: "Back upper", options: ["Logo"] },
           ],
         },
       },

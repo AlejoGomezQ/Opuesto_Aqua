@@ -544,7 +544,7 @@ const catalog = {
             id: "xts_design_6",
             name: "Build your own design",
             image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/4-XTS-SUB01-FRONT.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/04/4-XTS-SUB01-BACK-copia.png",
             fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/03/XTS-PLACEMENTS.png",
           },
@@ -641,7 +641,7 @@ const catalog = {
             id: "jgr_design_7",
             name: "Build your own design",
             image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-JGR-SUB01-2-FRONT.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/04/JGR-BW.png",
             fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/03/JGR-PLACEMENTS.png",
           },
@@ -717,7 +717,7 @@ const catalog = {
             id: "wup_design_4",
             name: "Build your own design",
             image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/7-WUP-SUB-FRONT.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/04/WUP-BW.png",
             fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/03/WUP-PLACEMENTS.png",
           },
@@ -734,86 +734,6 @@ const catalog = {
       },
     ],
     jackets: [
-      {
-        id: "WBJ",
-        name: "Windbreaker jacket unisex (WBJ)",
-        image:
-          "https://opuestoaqua.com/wp-content/uploads/2026/01/2-WBJ-SUB01-2-FRONT.png",
-        features: [
-          {
-            label: "Description",
-            value: "This unisex windbreaker is designed for those who value comfort, functionality, and effortless style. Featuring a relaxed fit, its lightweight, water-resistant construction makes it an ideal everyday essential for training, travel, or outdoor activities. It includes a breathable mesh lining, full-length front zipper, and an integrated hood that can be worn outside the high-profile collar.",
-          },
-          {
-            label: "Benefits",
-            value: [
-              "All Sizes",
-              "No Minimums",
-              "UV Protection",
-              "Vibrant Colors",
-              "Moisture Wicking/Quick Drying",
-              "Antimicrobial Properties",
-            ],
-          },
-          {
-            label: "Fabric features",
-            value: "Crafted from a lightweight, breathable polyester and spandex blend, incorporating 63% recycled plastic water bottles to reduce environmental impact.",
-          },
-        ],
-        designs: [
-          {
-            id: "wbj_design_1",
-            name: "WBJ - Design 1",
-            image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/2-WBJ-SUB01-2-FRONT.png",
-            fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/2-WBJ-SUB01-2-FRONT.png",
-          },
-          {
-            id: "wbj_design_2",
-            name: "WBJ - Design 2",
-            image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/2-WBJ-SUB01-FRONT.png",
-            fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/03/2-WBJ-SUB01.png",
-          },
-          {
-            id: "wbj_design_3",
-            name: "WBJ - Design 3",
-            image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/7-WBJ-SUB01-M-FRONT.png",
-            fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/03/7-WBJ-SUB01.png",
-          },
-          {
-            id: "wbj_design_4",
-            name: "WBJ - Design 4",
-            image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/10-WBJ-SUB01-FRONT.png",
-            fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/03/10-WBJ-SUB01.png",
-          },
-          {
-            id: "wbj_design_5",
-            name: "Build your own design",
-            image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/2-WBJ-SUB01-2-FRONT.png",
-            fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/03/WBJ-PLACEMENTS.png",
-          },
-        ],
-        breakdown: {
-          image: "https://opuestoaqua.com/wp-content/uploads/2026/03/WBJ-PLACEMENTS.png",
-          placements: [
-            { name: "Right front panel", options: ["Name"] },
-            { name: "Left front panel", options: ["Logo"] },
-            { name: "Outside collar", options: ["Logo", "Name"] },
-            { name: "Back", options: ["Logo"] },
-            { name: "Left sleeve", options: ["Logo", "Text"] },
-            { name: "Right sleeve", options: ["Logo", "Text"] },
-          ],
-        },
-      },
       {
         id: "CWB",
         name: "Female crop windbreaker (CWB)",
@@ -871,7 +791,7 @@ const catalog = {
             id: "cwb_design_4",
             name: "Build your own design",
             image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/4-CWB-SUB-FRONT-NEW.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/04/5-CWB-SUB-BACK-copia.png",
             fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/03/CWB-PLACEMENTS.png",
           },
@@ -1031,7 +951,7 @@ const catalog = {
             id: "sld_design_5",
             name: "Build your own design",
             image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/1-SLD-SUB01.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/04/1-SLD-SUB01-copia.png",
             fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/04/24-DL-SUB_1.png",
           },
@@ -1097,7 +1017,7 @@ const catalog = {
             id: "ths_design_4",
             name: "Build your own design",
             image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/2-THS-SUB01.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/04/21-THS-SUB01-copia.png",
             fullDesign:
               "https://opuestoaqua.com/wp-content/uploads/2026/04/2-THS-SUB01_1.png",
           },
@@ -1144,7 +1064,7 @@ const catalog = {
             image:
               "https://opuestoaqua.com/wp-content/uploads/2026/01/8-MOCKUP-BCK-SUB01.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/04/1BCK-SUB.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/04/1-BCK-SUB.png",
           },
           {
             id: "bck_design_2",
@@ -1174,13 +1094,13 @@ const catalog = {
             id: "bck_design_5",
             name: "Build your own design",
             image:
-              "https://opuestoaqua.com/wp-content/uploads/2026/01/8-MOCKUP-BCK-SUB01.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/04/Mesa-de-trabajo-1-copia.png",
             fullDesign:
-              "https://opuestoaqua.com/wp-content/uploads/2026/04/1BCK-SUB_1.png",
+              "https://opuestoaqua.com/wp-content/uploads/2026/04/8B-BCK-SUB_1.png",
           },
         ],
         breakdown: {
-          image: "https://opuestoaqua.com/wp-content/uploads/2026/04/1BCK-SUB_1.png",
+          image: "https://opuestoaqua.com/wp-content/uploads/2026/04/8B-BCK-SUB_1.png",
           placements: [
             { name: "Lower front print", options: ["Logo"] },
             { name: "Upper front print", options: ["Logo"] },
