@@ -135,7 +135,7 @@ let currentProductInfo = { product: null, category: null };
 const SIZE_CHARTS = {
   default: [
     { group: "Child/Youth", sizes: ["Y4", "Y6", "YXS", "YS", "YM", "YL"], prefix: "" },
-    { group: "Adult", sizes: ["XS", "S", "M", "L", "XL", "XXL", "XXXL"], prefix: "" }
+    { group: "Adult", sizes: ["XS", "S", "M", "L", "XL", "XXL"], prefix: "" }
   ],
   slides: [
     { group: "Child", sizes: ["11", "12", "13", "1", "2", "3", "4"], prefix: "c" },
